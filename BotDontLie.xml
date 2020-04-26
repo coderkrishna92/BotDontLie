@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BotDontLie</name>
+    </assembly>
+    <members>
+        <member name="T:BotDontLie.AdapterWithErrorHandler">
+            <summary>
+            The class of the adapter with the error handler.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.AdapterWithErrorHandler.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger{Microsoft.Bot.Builder.Integration.AspNet.Core.BotFrameworkHttpAdapter})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.AdapterWithErrorHandler"/> class.
+            </summary>
+            <param name="configuration">Collection of key/value settings for the application.</param>
+            <param name="logger">The logger mechanism.</param>
+        </member>
+        <member name="T:BotDontLie.Bots.NbaBot">
+            <summary>
+            This class is for the NBA Bot.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Bots.NbaBot.OnMessageActivityAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method executes whenever there is a message coming into the bot.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Bots.NbaBot.OnMembersAddedAsync(System.Collections.Generic.IList{Microsoft.Bot.Schema.ChannelAccount},Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IConversationUpdateActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method fires whenever a new member is added, or if the bot is installed in a personal scope.
+            </summary>
+            <param name="membersAdded">The list of members that are added.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="T:BotDontLie.Controllers.BotController">
+            <summary>
+            This ASP Controller is created to handle a request. Dependency Injection will provide the Adapter and IBot
+            implementation at runtime. Multiple different IBot implementations running at different endpoints can be
+            achieved by specifying a more specific type for the bot constructor argument.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Controllers.BotController.#ctor(Microsoft.Bot.Builder.Integration.AspNet.Core.IBotFrameworkHttpAdapter,Microsoft.Bot.Builder.IBot)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Controllers.BotController"/> class.
+            </summary>
+            <param name="adapter">The bot framework adapter.</param>
+            <param name="bot">The bot itself.</param>
+        </member>
+        <member name="M:BotDontLie.Controllers.BotController.PostAsync">
+            <summary>
+            The method that will posting messages.
+            </summary>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="T:BotDontLie.Program">
+            <summary>
+            The main driver class for the project.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Program.Main(System.String[])">
+            <summary>
+            The main driver method.
+            </summary>
+            <param name="args">Project specific arguments.</param>
+        </member>
+        <member name="M:BotDontLie.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Method that creates the web host builder.
+            </summary>
+            <param name="args">Project specific arguments.</param>
+            <returns>An instance of the web host builder.</returns>
+        </member>
+        <member name="T:BotDontLie.Startup">
+            <summary>
+            This is the startup class.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Startup"/> class.
+            </summary>
+            <param name="configuration">Application key/value settings.</param>
+        </member>
+        <member name="P:BotDontLie.Startup.Configuration">
+            <summary>
+            Gets all the key/value settings of the application.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">Service collection.</param>
+        </member>
+        <member name="M:BotDontLie.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">The application builder.</param>
+            <param name="env">The hosting environment.</param>
+        </member>
+    </members>
+</doc>
