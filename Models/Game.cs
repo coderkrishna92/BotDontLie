@@ -4,6 +4,7 @@
 
 namespace BotDontLie.Models
 {
+    using System;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -11,5 +12,70 @@ namespace BotDontLie.Models
     /// </summary>
     public class Game
     {
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
+        [JsonProperty("date")]
+        public DateTimeOffset Date { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home_team.
+        /// </summary>
+        [JsonProperty("home_team")]
+        public Team HomeTeam { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home_team_score.
+        /// </summary>
+        [JsonProperty("home_team_score")]
+        public int HomeTeamScore { get; set; }
+
+        /// <summary>
+        /// Gets or sets the period.
+        /// </summary>
+        [JsonProperty("period")]
+        public int Period { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the game happened in the postseason.
+        /// </summary>
+        [JsonProperty("postseason")]
+        public bool Postseason { get; set; }
+
+        /// <summary>
+        /// Gets or sets the season.
+        /// </summary>
+        [JsonProperty("season")]
+        public int Season { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time.
+        /// </summary>
+        [JsonProperty("time")]
+        public string Time { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visitor_team.
+        /// </summary>
+        [JsonProperty("visitor_team")]
+        public Team VisitorTeam { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visitor_team_score.
+        /// </summary>
+        [JsonProperty("visitor_team_score")]
+        public int VisitorTeamScore { get; set; }
     }
 }

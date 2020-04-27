@@ -16,7 +16,9 @@ namespace BotDontLie.Models
         /// Gets or sets the list of players.
         /// </summary>
         [JsonProperty("data")]
+#pragma warning disable CA2227 // Collection properties should be read only
         public List<Player> Players { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>
         /// Gets or sets the meta.
