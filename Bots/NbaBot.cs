@@ -8,7 +8,9 @@ namespace BotDontLie.Bots
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.ApplicationInsights;
     using Microsoft.Bot.Builder;
+    using Microsoft.Bot.Connector.Authentication;
     using Microsoft.Bot.Schema;
 
     /// <summary>
@@ -16,6 +18,23 @@ namespace BotDontLie.Bots
     /// </summary>
     public class NbaBot : ActivityHandler
     {
+        private readonly string appBaseUri;
+        private readonly TelemetryClient telemetryClient;
+        private readonly MicrosoftAppCredentials microsoftAppCredentials;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NbaBot"/> class.
+        /// </summary>
+        /// <param name="telemetryClient">Application Insights DI.</param>
+        /// <param name="microsoftAppCredentials">Microsoft App Credentials DI.</param>
+        /// <param name="appBaseUri">The application base URI.</param>
+        public NbaBot(TelemetryClient telemetryClient, MicrosoftAppCredentials microsoftAppCredentials, string appBaseUri)
+        {
+            this.appBaseUri = appBaseUri;
+            this.telemetryClient = telemetryClient;
+            this.microsoftAppCredentials = microsoftAppCredentials;
+        }
+
         /// <summary>
         /// This method executes whenever there is a message coming into the bot.
         /// </summary>

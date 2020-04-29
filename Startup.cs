@@ -5,11 +5,13 @@
 namespace BotDontLie
 {
     using BotDontLie.Bots;
+    using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Integration.AspNet.Core;
+    using Microsoft.Bot.Connector.Authentication;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -36,15 +38,27 @@ namespace BotDontLie
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services">Service collection.</param>
-        public static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Create the Bot Framework Adapter with error handling enabled.
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
+            // Create the Bot App Credentials.
+            services.AddSingleton(new MicrosoftAppCredentials(this.Configuration["MicrosoftAppId"], this.Configuration["MicrosoftAppPassword"]));
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, NbaBot>();
+            services.AddTransient<IBot, NbaBot>((provider) => new NbaBot(
+                provider.GetRequiredService<TelemetryClient>(),
+                provider.GetRequiredService<MicrosoftAppCredentials>(),
+                this.Configuration["AppBaseUri"]));
+
+            // Adding the HttpClient.
+            services.AddHttpClient();
+
+            // Adding the ApplicationInsights telemetry.
+            services.AddApplicationInsightsTelemetry();
         }
 
         /// <summary>
@@ -52,7 +66,7 @@ namespace BotDontLie
         /// </summary>
         /// <param name="app">The application builder.</param>
         /// <param name="env">The hosting environment.</param>
-        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
