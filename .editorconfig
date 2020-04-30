@@ -8,3 +8,6 @@ dotnet_diagnostic.CA1822.severity = none
 
 # CA1054: Uri parameters should not be strings
 dotnet_diagnostic.CA1054.severity = none
+
+# CA1308: Normalize strings to uppercase
+dotnet_diagnostic.CA1308.severity = none
