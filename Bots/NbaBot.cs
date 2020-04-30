@@ -8,6 +8,7 @@ namespace BotDontLie.Bots
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using BotDontLie.Cards;
     using BotDontLie.Properties;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.DataContracts;
