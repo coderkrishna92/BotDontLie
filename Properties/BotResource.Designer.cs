@@ -61,6 +61,15 @@ namespace BotDontLie.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Take a tour.
+        /// </summary>
+        public static string TakeATourCTATitle {
+            get {
+                return ResourceManager.GetString("TakeATourCTATitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello.
         /// </summary>
         public static string WelcomeText {
