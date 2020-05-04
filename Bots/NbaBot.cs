@@ -6,15 +6,18 @@ namespace BotDontLie.Bots
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading;
     using System.Threading.Tasks;
     using BotDontLie.Cards;
+    using BotDontLie.Models;
     using BotDontLie.Properties;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.DataContracts;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Connector.Authentication;
     using Microsoft.Bot.Schema;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// This class is for the NBA Bot.
@@ -177,8 +180,27 @@ namespace BotDontLie.Bots
             ITurnContext<IMessageActivity> turnContext,
             CancellationToken cancellationToken)
         {
-            var text = message?.Text;
-            await turnContext.SendActivityAsync($"Echoing: {message}").ConfigureAwait(false);
+            if (!string.IsNullOrEmpty(message.ReplyToId) && (message.Value != null) && ((JObject)message.Value).HasValues)
+            {
+                this.telemetryClient.TrackTrace("Card submit in 1:1 chat");
+                await this.OnAdaptiveCardSubmitInPersonalChatAsync(message?.Text, turnContext, cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            string text = (message.Text ?? string.Empty).Trim().ToLower(CultureInfo.InvariantCulture);
+
+            switch (text)
+            {
+                case Constants.TakeATour:
+                    this.telemetryClient.TrackTrace("Sending the user tour card");
+                    var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
+                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
+                    break;
+                default:
+                    this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
+                    break;
+            }
         }
 
         // Sending the typing indicator to the user.
