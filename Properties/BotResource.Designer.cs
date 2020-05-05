@@ -61,6 +61,60 @@ namespace BotDontLie.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You can search for a game in NBA any season from 1979 onwards....
+        /// </summary>
+        public static string FindGamesText {
+            get {
+                return ResourceManager.GetString("FindGamesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Games.
+        /// </summary>
+        public static string FindGamesTitleText {
+            get {
+                return ResourceManager.GetString("FindGamesTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can search for an NBA player by their last name....
+        /// </summary>
+        public static string FindPlayersText {
+            get {
+                return ResourceManager.GetString("FindPlayersText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Players.
+        /// </summary>
+        public static string FindPlayersTitleText {
+            get {
+                return ResourceManager.GetString("FindPlayersTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can search for an NBA franchise.....
+        /// </summary>
+        public static string FindTeamsText {
+            get {
+                return ResourceManager.GetString("FindTeamsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Teams.
+        /// </summary>
+        public static string FindTeamsTitleText {
+            get {
+                return ResourceManager.GetString("FindTeamsTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take a tour.
         /// </summary>
         public static string TakeATourCTATitle {

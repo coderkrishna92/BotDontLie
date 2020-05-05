@@ -22,9 +22,9 @@ namespace BotDontLie.Cards
         {
             return new List<Attachment>()
             {
-                GetCard(BotResource.FunctionCardTitleText, BotResource.FunctionCardText, appBaseUri + "/content/Askaquestion.png"),
-                GetCard(BotResource.AskAnExpertTitleText, BotResource.AskAnExpertText, appBaseUri + "/content/Expertinquiry.png"),
-                GetCard(BotResource.ShareFeedbackTitleText, BotResource.FeedbackText, appBaseUri + "/content/Sharefeedback.png"),
+                GetCard(BotResource.FindPlayersTitleText, BotResource.FindPlayersText, appBaseUri + "/content/FindPlayers.png"),
+                GetCard(BotResource.FindTeamsTitleText, BotResource.FindTeamsText, appBaseUri + "/content/NbaTeams.png"),
+                GetCard(BotResource.FindGamesTitleText, BotResource.FindGamesText, appBaseUri + "/content/FindGames.png"),
             };
         }
 
