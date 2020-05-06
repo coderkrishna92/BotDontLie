@@ -196,6 +196,10 @@ namespace BotDontLie.Bots
                     var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
                     await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
                     break;
+                case Constants.ListAllTeams:
+                    this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
+                    break;
                 default:
                     this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
                     await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
