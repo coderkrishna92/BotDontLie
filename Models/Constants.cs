@@ -13,5 +13,10 @@ namespace BotDontLie.Models
         /// This command/constant allows for the ability to take a tour.
         /// </summary>
         public const string TakeATour = "take a tour";
+
+        /// <summary>
+        /// This command/constant allows for querying all teams.
+        /// </summary>
+        public const string ListAllTeams = "list all teams";
     }
 }
