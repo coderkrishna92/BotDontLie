@@ -203,6 +203,24 @@ namespace BotDontLie.Bots
             }
         }
 
+        private async Task OnAdaptiveCardSubmitInPersonalChatAsync(string text, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            this.telemetryClient.TrackTrace("Adaptive card submit in personal chat");
+
+            switch (text)
+            {
+                case Constants.TakeATour:
+                    this.telemetryClient.TrackTrace("Sending the user tour card");
+                    var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
+                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
+                    break;
+                default:
+                    this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
+                    break;
+            }
+        }
+
         // Sending the typing indicator to the user.
         private async Task SendTypingIndicatorAsync(ITurnContext turnContext)
         {
