@@ -4,6 +4,8 @@
 
 namespace BotDontLie
 {
+    using System;
+    using System.Net.Http;
     using BotDontLie.Bots;
     using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Builder;
@@ -55,7 +57,10 @@ namespace BotDontLie
                 this.Configuration["AppBaseUri"]));
 
             // Adding the HttpClient.
-            services.AddHttpClient();
+            services.AddHttpClient("BallDontLieAPI", c =>
+            {
+                c.BaseAddress = new Uri(this.Configuration["BallDontLieApiUrl"]);
+            });
 
             // Adding the ApplicationInsights telemetry.
             services.AddApplicationInsightsTelemetry();

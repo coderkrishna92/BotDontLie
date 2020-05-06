@@ -17,6 +17,7 @@ namespace BotDontLie.Bots
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Connector.Authentication;
     using Microsoft.Bot.Schema;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Newtonsoft.Json.Linq;
 
     /// <summary>
