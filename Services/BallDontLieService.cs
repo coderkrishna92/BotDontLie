@@ -4,10 +4,10 @@
 
 namespace BotDontLie.Services
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
     using BotDontLie.Models;
     using Microsoft.ApplicationInsights;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// This class will implement the methods that are defined in the interface <see cref="IBallDontLieService"/>.
@@ -35,6 +35,7 @@ namespace BotDontLie.Services
         public async Task<TeamsResponse> RetrieveAllTeams()
         {
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
+            var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
             return null;
         }
     }
