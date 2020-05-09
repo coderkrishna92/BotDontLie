@@ -8,6 +8,7 @@ namespace BotDontLie.Services
     using System.Threading.Tasks;
     using BotDontLie.Models;
     using Microsoft.ApplicationInsights;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// This class will implement the methods that are defined in the interface <see cref="IBallDontLieService"/>.
@@ -36,6 +37,45 @@ namespace BotDontLie.Services
         {
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "teams")
+            {
+            })
+            {
+                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
+                    return teamsResponse;
+                }
+                else
+                {
+                    this.telemetryClient.TrackTrace("Was not able to get the teams list fully");
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method implementation to get a team by their name (i.e. Knicks).
+        /// </summary>
+        /// <param name="teamName">The team name.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
+        public async Task<Team> RetrieveTeamByName(string teamName)
+        {
+            var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
+            return null;
+        }
+
+        /// <summary>
+        /// Method implementation to get a team by their full name (i.e. Oklahoma City Thunder).
+        /// </summary>
+        /// <param name="teamFullName">The full/formal name of the NBA franchise.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
+        public async Task<Team> RetrieveTeamByFullName(string teamFullName)
+        {
+            var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
             return null;
         }
     }
