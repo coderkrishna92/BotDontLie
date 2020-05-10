@@ -4,6 +4,7 @@
 
 namespace BotDontLie.Services
 {
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using BotDontLie.Models;
@@ -65,7 +66,9 @@ namespace BotDontLie.Services
         public async Task<Team> RetrieveTeamByName(string teamName)
         {
             var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
-            return null;
+            var allTeamsList = teamsResponse.Teams;
+            var teamToReturn = allTeamsList.FirstOrDefault(x => x.Name == teamName);
+            return teamToReturn;
         }
 
         /// <summary>
@@ -76,7 +79,9 @@ namespace BotDontLie.Services
         public async Task<Team> RetrieveTeamByFullName(string teamFullName)
         {
             var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
-            return null;
+            var allTeamsList = teamsResponse.Teams;
+            var teamToReturn = allTeamsList.FirstOrDefault(x => x.FullName == teamFullName);
+            return teamToReturn;
         }
     }
 }
