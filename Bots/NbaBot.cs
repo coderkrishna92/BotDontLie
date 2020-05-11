@@ -12,12 +12,12 @@ namespace BotDontLie.Bots
     using BotDontLie.Cards;
     using BotDontLie.Models;
     using BotDontLie.Properties;
+    using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.DataContracts;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Connector.Authentication;
     using Microsoft.Bot.Schema;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Newtonsoft.Json.Linq;
 
     /// <summary>
@@ -28,18 +28,21 @@ namespace BotDontLie.Bots
         private readonly string appBaseUri;
         private readonly TelemetryClient telemetryClient;
         private readonly MicrosoftAppCredentials microsoftAppCredentials;
+        private readonly IBallDontLieService ballDontLieService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NbaBot"/> class.
         /// </summary>
         /// <param name="telemetryClient">Application Insights DI.</param>
         /// <param name="microsoftAppCredentials">Microsoft App Credentials DI.</param>
+        /// <param name="ballDontLieService">Calling NBA APIs DI.</param>
         /// <param name="appBaseUri">The application base URI.</param>
-        public NbaBot(TelemetryClient telemetryClient, MicrosoftAppCredentials microsoftAppCredentials, string appBaseUri)
+        public NbaBot(TelemetryClient telemetryClient, MicrosoftAppCredentials microsoftAppCredentials, IBallDontLieService ballDontLieService, string appBaseUri)
         {
             this.appBaseUri = appBaseUri;
             this.telemetryClient = telemetryClient;
             this.microsoftAppCredentials = microsoftAppCredentials;
+            this.ballDontLieService = ballDontLieService;
         }
 
         /// <summary>
@@ -199,7 +202,16 @@ namespace BotDontLie.Bots
                     break;
                 case Constants.ListAllTeams:
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
+                    var teamsResponse = await this.ballDontLieService.RetrieveAllTeams().ConfigureAwait(false);
+                    if (teamsResponse != null)
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text($"All the way from downtown - I got {teamsResponse.Teams.Count} teams for you!")).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any data for the teams. Will have to try again later.")).ConfigureAwait(false);
+                    }
+
                     break;
                 case Constants.ListAllGames:
                     this.telemetryClient.TrackTrace("Querying to get all games from 1979 to present");
