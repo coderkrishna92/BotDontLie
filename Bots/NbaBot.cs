@@ -201,6 +201,14 @@ namespace BotDontLie.Bots
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
                     break;
+                case Constants.ListAllGames:
+                    this.telemetryClient.TrackTrace("Querying to get all games from 1979 to present");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
+                    break;
+                case Constants.ListAllPlayers:
+                    this.telemetryClient.TrackTrace("Querying to get all the players from all teams");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
+                    break;
                 default:
                     this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
                     await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
