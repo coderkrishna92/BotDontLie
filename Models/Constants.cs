@@ -28,5 +28,10 @@ namespace BotDontLie.Models
         /// This command/constant allows to list all players.
         /// </summary>
         public const string ListAllPlayers = "list all players";
+
+        /// <summary>
+        /// This command/constant allows to list all stats.
+        /// </summary>
+        public const string ListAllStats = "list all stats";
     }
 }
