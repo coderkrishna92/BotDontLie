@@ -218,7 +218,7 @@ namespace BotDontLie.Bots
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
                     break;
                 case Constants.ListAllPlayers:
-                    this.telemetryClient.TrackTrace("Querying to get all the players from all teams");
+                    this.telemetryClient.TrackTrace("Querying to get all the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
                 case Constants.ListAllStats:

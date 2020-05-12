@@ -31,5 +31,11 @@ namespace BotDontLie.Services
         /// <param name="teamFullName">The full name of the team (i.e. Oklahoma City Thunder).</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
         Task<Team> RetrieveTeamByFullName(string teamFullName);
+
+        /// <summary>
+        /// Method definition that will retrieve all games.
+        /// </summary>
+        /// <returns>A unit of execution that contains the type of <see cref="GamesResponse"/>.</returns>
+        Task<GamesResponse> RetrieveAllGames();
     }
 }

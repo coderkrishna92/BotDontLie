@@ -15,7 +15,7 @@ namespace BotDontLie.Models
         /// Gets or sets the player id.
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Gets or sets the player first_name.
@@ -27,13 +27,13 @@ namespace BotDontLie.Models
         /// Gets or sets the height of the player in feet.
         /// </summary>
         [JsonProperty("height_feet")]
-        public int? HeightFeet { get; set; }
+        public long? HeightFeet { get; set; }
 
         /// <summary>
         /// Gets or sets the height of the player in inches.
         /// </summary>
         [JsonProperty("height_inches")]
-        public int? HeightInches { get; set; }
+        public long? HeightInches { get; set; }
 
         /// <summary>
         /// Gets or sets the player last_name.
@@ -57,6 +57,6 @@ namespace BotDontLie.Models
         /// Gets or sets the weight of the player in pounds.
         /// </summary>
         [JsonProperty("weight_pounds")]
-        public int? WeightPounds { get; set; }
+        public long? WeightPounds { get; set; }
     }
 }
