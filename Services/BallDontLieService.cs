@@ -52,7 +52,7 @@ namespace BotDontLie.Services
                 }
                 else
                 {
-                    this.telemetryClient.TrackTrace("Was not able to get the teams list fully");
+                    this.telemetryClient.TrackTrace("Not able to get the teams list fully");
                     return null;
                 }
             }
@@ -64,7 +64,26 @@ namespace BotDontLie.Services
         /// <returns>A unit of execution that contains a type of <see cref="GamesResponse"/>.</returns>
         public async Task<GamesResponse> RetrieveAllGamesAsync()
         {
-            return null;
+            this.telemetryClient.TrackTrace("Requesting to get all games");
+            var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "games")
+            {
+            })
+            {
+                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(responseContent);
+                    return gamesResponse;
+                }
+                else
+                {
+                    this.telemetryClient.TrackTrace("Not able to get the games fully");
+                    return null;
+                }
+            }
         }
 
         /// <summary>
