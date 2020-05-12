@@ -34,7 +34,7 @@ namespace BotDontLie.Services
         /// Method implementation to return all 30 NBA franchises.
         /// </summary>
         /// <returns>A unit of execution that contains the type of <see cref="TeamsResponse"/>.</returns>
-        public async Task<TeamsResponse> RetrieveAllTeams()
+        public async Task<TeamsResponse> RetrieveAllTeamsAsync()
         {
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
@@ -59,14 +59,23 @@ namespace BotDontLie.Services
         }
 
         /// <summary>
+        /// Method implementation to get all the games available.
+        /// </summary>
+        /// <returns>A unit of execution that contains a type of <see cref="GamesResponse"/>.</returns>
+        public async Task<GamesResponse> RetrieveAllGamesAsync()
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Method implementation to get a team by their name (i.e. Knicks).
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
-        public async Task<Team> RetrieveTeamByName(string teamName)
+        public async Task<Team> RetrieveTeamByNameAsync(string teamName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the name: {teamName}");
-            var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
+            var teamsResponse = await this.RetrieveAllTeamsAsync().ConfigureAwait(false);
             var allTeamsList = teamsResponse.Teams;
             var teamToReturn = allTeamsList.FirstOrDefault(x => x.Name == teamName);
             return teamToReturn;
@@ -77,10 +86,10 @@ namespace BotDontLie.Services
         /// </summary>
         /// <param name="teamFullName">The full/formal name of the NBA franchise.</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
-        public async Task<Team> RetrieveTeamByFullName(string teamFullName)
+        public async Task<Team> RetrieveTeamByFullNameAsync(string teamFullName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the full name: {teamFullName}");
-            var teamsResponse = await this.RetrieveAllTeams().ConfigureAwait(false);
+            var teamsResponse = await this.RetrieveAllTeamsAsync().ConfigureAwait(false);
             var allTeamsList = teamsResponse.Teams;
             var teamToReturn = allTeamsList.FirstOrDefault(x => x.FullName == teamFullName);
             return teamToReturn;
