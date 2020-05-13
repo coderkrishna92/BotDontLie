@@ -19,6 +19,18 @@ namespace BotDontLie.Services
         Task<TeamsResponse> RetrieveAllTeamsAsync();
 
         /// <summary>
+        /// Method definition that will retrieve all games.
+        /// </summary>
+        /// <returns>A unit of execution that contains the type of <see cref="GamesResponse"/>.</returns>
+        Task<GamesResponse> RetrieveAllGamesAsync();
+
+        /// <summary>
+        /// Method definition that will retrieve all stats.
+        /// </summary>
+        /// <returns>A unit of execution that contains the type of <see cref="StatsResponse"/>.</returns>
+        Task<StatsResponse> RetrieveAllStatsAsync();
+
+        /// <summary>
         /// Method definition that will retrieve a specific NBA franchise by their name.
         /// </summary>
         /// <param name="teamName">The name of the team (not the full name).</param>
@@ -31,11 +43,5 @@ namespace BotDontLie.Services
         /// <param name="teamFullName">The full name of the team (i.e. Oklahoma City Thunder).</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
         Task<Team> RetrieveTeamByFullNameAsync(string teamFullName);
-
-        /// <summary>
-        /// Method definition that will retrieve all games.
-        /// </summary>
-        /// <returns>A unit of execution that contains the type of <see cref="GamesResponse"/>.</returns>
-        Task<GamesResponse> RetrieveAllGamesAsync();
     }
 }

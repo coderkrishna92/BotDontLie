@@ -87,6 +87,33 @@ namespace BotDontLie.Services
         }
 
         /// <summary>
+        /// Method implementation to get all the stats available.
+        /// </summary>
+        /// <returns>A unit of execution that contains a type of <see cref="StatsResponse"/>.</returns>
+        public async Task<StatsResponse> RetrieveAllStatsAsync()
+        {
+            this.telemetryClient.TrackTrace("Requesting to get all NBA stats");
+            var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "stats")
+            {
+            })
+            {
+                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var statsResponse = JsonConvert.DeserializeObject<StatsResponse>(responseContent);
+                    return statsResponse;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Method implementation to get a team by their name (i.e. Knicks).
         /// </summary>
         /// <param name="teamName">The team name.</param>
