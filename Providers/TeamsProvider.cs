@@ -6,6 +6,8 @@ namespace BotDontLie.Providers
 {
     using System;
     using System.Threading.Tasks;
+    using BotDontLie.Models;
+    using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Table;
 
     /// <summary>
@@ -24,6 +26,20 @@ namespace BotDontLie.Providers
         public TeamsProvider(string connectionString)
         {
             this.initializeTask = new Lazy<Task>(() => this.InitializeTableStorageAsync(connectionString));
+        }
+
+        private async Task EnsureInitializedAsync()
+        {
+            await this.initializeTask.Value.ConfigureAwait(false);
+        }
+
+        private async Task InitializeTableStorageAsync(string connectionString)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
+            CloudTableClient cloudTableClient = storageAccount.CreateCloudTableClient();
+            this.teamCloudTable = cloudTableClient.GetTableReference(Constants.TeamInfoTableName);
+
+            await this.teamCloudTable.CreateIfNotExistsAsync().ConfigureAwait(false);
         }
     }
 }

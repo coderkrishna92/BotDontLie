@@ -33,5 +33,10 @@ namespace BotDontLie.Models
         /// This command/constant allows to list all stats.
         /// </summary>
         public const string ListAllStats = "list all stats";
+
+        /// <summary>
+        /// This constant is representing the TeamInfo.
+        /// </summary>
+        public const string TeamInfoTableName = "Teams";
     }
 }
