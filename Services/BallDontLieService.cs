@@ -8,6 +8,7 @@ namespace BotDontLie.Services
     using System.Net.Http;
     using System.Threading.Tasks;
     using BotDontLie.Models;
+    using BotDontLie.Providers;
     using Microsoft.ApplicationInsights;
     using Newtonsoft.Json;
 
@@ -18,16 +19,19 @@ namespace BotDontLie.Services
     {
         private readonly TelemetryClient telemetryClient;
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly ITeamsProvider teamsProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BallDontLieService"/> class.
         /// </summary>
         /// <param name="telemetryClient">Application Insights DI.</param>
         /// <param name="httpClientFactory">The HTTP Client Factory DI.</param>
-        public BallDontLieService(TelemetryClient telemetryClient, IHttpClientFactory httpClientFactory)
+        /// <param name="teamsProvider">The NBA Teams Provider DI.</param>
+        public BallDontLieService(TelemetryClient telemetryClient, IHttpClientFactory httpClientFactory, ITeamsProvider teamsProvider)
         {
             this.telemetryClient = telemetryClient;
             this.httpClientFactory = httpClientFactory;
+            this.teamsProvider = teamsProvider;
         }
 
         /// <summary>

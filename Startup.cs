@@ -7,6 +7,7 @@ namespace BotDontLie
     using System;
     using System.Net.Http;
     using BotDontLie.Bots;
+    using BotDontLie.Providers;
     using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Builder;
@@ -51,10 +52,16 @@ namespace BotDontLie
             // Create the Bot App Credentials.
             services.AddSingleton(new MicrosoftAppCredentials(this.Configuration["MicrosoftAppId"], this.Configuration["MicrosoftAppPassword"]));
 
+            // Adding the teams provider.
+            services.AddSingleton<ITeamsProvider, TeamsProvider>((provider) => new TeamsProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
             // Having the necessary services instantiated.
             services.AddSingleton<IBallDontLieService, BallDontLieService>((provider) => new BallDontLieService(
                 provider.GetRequiredService<TelemetryClient>(),
-                provider.GetRequiredService<IHttpClientFactory>()));
+                provider.GetRequiredService<IHttpClientFactory>(),
+                provider.GetRequiredService<ITeamsProvider>()));
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, NbaBot>((provider) => new NbaBot(
