@@ -5,6 +5,7 @@
 namespace BotDontLie.Providers
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
     using BotDontLie.Models;
     using Microsoft.ApplicationInsights;
@@ -36,18 +37,45 @@ namespace BotDontLie.Providers
             this.telemetryClient = telemetryClient;
         }
 
+        /// <summary>
+        /// Saves a team entity.
+        /// </summary>
+        /// <param name="teamEntity">The team to save.</param>
+        /// <returns>A unit of execution.</returns>
         public Task UpsertNbaTeamAsync(TeamEntity teamEntity)
         {
-            throw new NotImplementedException();
+            if (teamEntity is null)
+            {
+                throw new ArgumentNullException(nameof(teamEntity));
+            }
+
+            this.telemetryClient.TrackTrace("UpsertNbaTeamAsync called.");
+
+            teamEntity.PartitionKey = PartitionKey;
+            teamEntity.RowKey = teamEntity.TeamId.ToString(CultureInfo.InvariantCulture);
+
+            return this.StoreOrUpdateTeamEntityAsync(teamEntity);
         }
 
+        /// <summary>
+        /// Method to retrieve a <see cref="TeamEntity"/> using the full name.
+        /// </summary>
+        /// <param name="teamFullName">The full name for an NBA team.</param>
+        /// <returns>A unit of execution that returns a <see cref="TeamEntity"/> boxed in.</returns>
         public async Task<TeamEntity> GetTeamByFullNameAsync(string teamFullName)
         {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Method to retrieve a <see cref="TeamEntity"/> using the team name.
+        /// </summary>
+        /// <param name="teamName">The name of the NBA team.</param>
+        /// <returns>A unit of execution that returns a <see cref="TeamEntity"/> boxed in.</returns>
         public async Task<TeamEntity> GetTeamByNameAsync(string teamName)
         {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
             throw new NotImplementedException();
         }
 
@@ -65,6 +93,18 @@ namespace BotDontLie.Providers
             this.teamCloudTable = cloudTableClient.GetTableReference(Constants.TeamInfoTableName);
 
             await this.teamCloudTable.CreateIfNotExistsAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Store or update ticket entity in table storage.
+        /// </summary>
+        /// <param name="entity">Represents ticket entity used for storage and retrieval.</param>
+        /// <returns><see cref="Task"/> that represents configuration entity is saved or updated.</returns>
+        private async Task<TableResult> StoreOrUpdateTeamEntityAsync(TeamEntity entity)
+        {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+            TableOperation addOrUpdateOperation = TableOperation.InsertOrReplace(entity);
+            return await this.teamCloudTable.ExecuteAsync(addOrUpdateOperation).ConfigureAwait(false);
         }
     }
 }
