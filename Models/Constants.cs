@@ -17,7 +17,7 @@ namespace BotDontLie.Models
         /// <summary>
         /// This command/constant allows for querying all teams.
         /// </summary>
-        public const string ListAllTeams = "list all teams";
+        public const string SyncAllTeams = "sync all teams";
 
         /// <summary>
         /// This command/constant allows to query all games.

@@ -4,6 +4,7 @@
 
 namespace BotDontLie.Services
 {
+    using System;
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace BotDontLie.Services
         /// Method implementation to return all 30 NBA franchises.
         /// </summary>
         /// <returns>A unit of execution that contains the type of <see cref="TeamsResponse"/>.</returns>
-        public async Task<TeamsResponse> RetrieveAllTeamsAsync()
+        public async Task<TeamsResponse> SyncAllTeamsAsync()
         {
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
@@ -125,10 +126,18 @@ namespace BotDontLie.Services
         public async Task<Team> RetrieveTeamByNameAsync(string teamName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the name: {teamName}");
-            var teamsResponse = await this.RetrieveAllTeamsAsync().ConfigureAwait(false);
-            var allTeamsList = teamsResponse.Teams;
-            var teamToReturn = allTeamsList.FirstOrDefault(x => x.Name == teamName);
-            return teamToReturn;
+            var teamsResponse = await this.teamsProvider.GetTeamByNameAsync(teamName).ConfigureAwait(false);
+
+            return new Team
+            {
+                Abbreviation = teamsResponse.Abbreviation,
+                City = teamsResponse.City,
+                Id = teamsResponse.TeamId,
+                Conference = teamsResponse.Conference,
+                Division = teamsResponse.Division,
+                FullName = teamsResponse.FullName,
+                Name = teamsResponse.Name,
+            };
         }
 
         /// <summary>
@@ -139,10 +148,18 @@ namespace BotDontLie.Services
         public async Task<Team> RetrieveTeamByFullNameAsync(string teamFullName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the full name: {teamFullName}");
-            var teamsResponse = await this.RetrieveAllTeamsAsync().ConfigureAwait(false);
-            var allTeamsList = teamsResponse.Teams;
-            var teamToReturn = allTeamsList.FirstOrDefault(x => x.FullName == teamFullName);
-            return teamToReturn;
+            var teamsResponse = await this.teamsProvider.GetTeamByFullNameAsync(teamFullName).ConfigureAwait(false);
+
+            return new Team
+            {
+                Id = teamsResponse.TeamId,
+                City = teamsResponse.City,
+                Abbreviation = teamsResponse.Abbreviation,
+                Conference = teamsResponse.Conference,
+                Division = teamsResponse.Division,
+                FullName = teamsResponse.FullName,
+                Name = teamsResponse.Name,
+            };
         }
     }
 }

@@ -200,9 +200,9 @@ namespace BotDontLie.Bots
                     var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
                     await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
                     break;
-                case Constants.ListAllTeams:
+                case Constants.SyncAllTeams:
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
-                    var teamsResponse = await this.ballDontLieService.RetrieveAllTeamsAsync().ConfigureAwait(false);
+                    var teamsResponse = await this.ballDontLieService.SyncAllTeamsAsync().ConfigureAwait(false);
                     if (teamsResponse != null)
                     {
                         await turnContext.SendActivityAsync(MessageFactory.Text($"All the way from downtown - I got {teamsResponse.Teams.Count} teams for you!")).ConfigureAwait(false);
