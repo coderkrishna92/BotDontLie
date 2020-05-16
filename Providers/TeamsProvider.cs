@@ -64,6 +64,7 @@ namespace BotDontLie.Providers
         /// <returns>A unit of execution that returns a <see cref="TeamEntity"/> boxed in.</returns>
         public async Task<TeamEntity> GetTeamByFullNameAsync(string teamFullName)
         {
+            this.telemetryClient.TrackTrace($"GetTeamByFullNameAsync being called for: {teamFullName}");
             await this.EnsureInitializedAsync().ConfigureAwait(false);
             throw new NotImplementedException();
         }
@@ -75,6 +76,7 @@ namespace BotDontLie.Providers
         /// <returns>A unit of execution that returns a <see cref="TeamEntity"/> boxed in.</returns>
         public async Task<TeamEntity> GetTeamByNameAsync(string teamName)
         {
+            this.telemetryClient.TrackTrace($"GetTeamByNameAsync being called for: {teamName}");
             await this.EnsureInitializedAsync().ConfigureAwait(false);
             throw new NotImplementedException();
         }
