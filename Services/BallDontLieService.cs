@@ -5,6 +5,7 @@
 namespace BotDontLie.Services
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace BotDontLie.Services
         /// Method implementation to return all 30 NBA franchises.
         /// </summary>
         /// <returns>A unit of execution that contains the type of <see cref="TeamsResponse"/>.</returns>
-        public async Task<TeamsResponse> SyncAllTeamsAsync()
+        public async Task<bool> SyncAllTeamsAsync()
         {
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
@@ -53,12 +54,18 @@ namespace BotDontLie.Services
                 {
                     var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
-                    return teamsResponse;
+                    foreach (var item in teamsResponse.Teams)
+                    {
+                        var teamEntity = this.CreateTeamEntity(item);
+                        await this.teamsProvider.UpsertNbaTeamAsync(teamEntity).ConfigureAwait(false);
+                    }
+
+                    return true;
                 }
                 else
                 {
                     this.telemetryClient.TrackTrace("Not able to get the teams list fully");
-                    return null;
+                    return false;
                 }
             }
         }
@@ -159,6 +166,22 @@ namespace BotDontLie.Services
                 Division = teamsResponse.Division,
                 FullName = teamsResponse.FullName,
                 Name = teamsResponse.Name,
+            };
+        }
+
+        private TeamEntity CreateTeamEntity(Team team)
+        {
+            return new TeamEntity
+            {
+                TeamId = team.Id,
+                RowKey = team.Id.ToString(CultureInfo.InvariantCulture),
+                PartitionKey = "NbaTeam",
+                Abbreviation = team.Abbreviation,
+                City = team.City,
+                Conference = team.Conference,
+                Division = team.Division,
+                FullName = team.FullName,
+                Name = team.Name,
             };
         }
     }

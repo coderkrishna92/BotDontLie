@@ -203,9 +203,9 @@ namespace BotDontLie.Bots
                 case Constants.SyncAllTeams:
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
                     var teamsResponse = await this.ballDontLieService.SyncAllTeamsAsync().ConfigureAwait(false);
-                    if (teamsResponse != null)
+                    if (teamsResponse)
                     {
-                        await turnContext.SendActivityAsync(MessageFactory.Text($"All the way from downtown - I got {teamsResponse.Teams.Count} teams for you!")).ConfigureAwait(false);
+                        await turnContext.SendActivityAsync(MessageFactory.Text($"All the way from downtown - I am able to sync the teams for you!")).ConfigureAwait(false);
                     }
                     else
                     {

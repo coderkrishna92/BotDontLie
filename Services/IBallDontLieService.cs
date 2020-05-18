@@ -16,7 +16,7 @@ namespace BotDontLie.Services
         /// Method definition that will retrieve all 30 NBA franchises.
         /// </summary>
         /// <returns>A unit of execution that contains a type of <see cref="TeamsResponse"/>.</returns>
-        Task<TeamsResponse> SyncAllTeamsAsync();
+        Task<bool> SyncAllTeamsAsync();
 
         /// <summary>
         /// Method definition that will retrieve all games.

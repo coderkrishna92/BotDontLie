@@ -121,6 +121,41 @@
             This class defines the NBA Team to be stored in Azure table storage.
             </summary>
         </member>
+        <member name="P:BotDontLie.Models.TeamEntity.TeamId">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.Abbreviation">
+            <summary>
+            Gets or sets the abbreviation.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.City">
+            <summary>
+            Gets or sets the city.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.Conference">
+            <summary>
+            Gets or sets the conference.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.Division">
+            <summary>
+            Gets or sets the division.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.FullName">
+            <summary>
+            Gets or sets the full_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Models.TeamEntity.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+        </member>
         <member name="T:BotDontLie.Models.Constants">
             <summary>
             This class defines necessary constants for the bot to function.
@@ -131,7 +166,7 @@
             This command/constant allows for the ability to take a tour.
             </summary>
         </member>
-        <member name="F:BotDontLie.Models.Constants.ListAllTeams">
+        <member name="F:BotDontLie.Models.Constants.SyncAllTeams">
             <summary>
             This command/constant allows for querying all teams.
             </summary>
@@ -149,6 +184,11 @@
         <member name="F:BotDontLie.Models.Constants.ListAllStats">
             <summary>
             This command/constant allows to list all stats.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Models.Constants.TeamInfoTableName">
+            <summary>
+            This constant is representing the TeamInfo.
             </summary>
         </member>
         <member name="T:BotDontLie.Models.Game">
@@ -655,24 +695,86 @@
             This interface defines the methods to insert data into Azure table storage.
             </summary>
         </member>
+        <member name="M:BotDontLie.Providers.ITeamsProvider.UpsertNbaTeamAsync(BotDontLie.Models.TeamEntity)">
+            <summary>
+            Save or update the team entity.
+            </summary>
+            <param name="teamEntity">The team that is being retrieved from the original Ball Dont Lie API.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> that resolves successfully if the data was saved properly.</returns>
+        </member>
+        <member name="M:BotDontLie.Providers.ITeamsProvider.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method definition to get the team by the full name.
+            </summary>
+            <param name="teamFullName">The full name of the NBA team (i.e. New York Knicks).</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.TeamEntity"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Providers.ITeamsProvider.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method definition to get the team by name.
+            </summary>
+            <param name="teamName">The name of the NBA team.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.TeamEntity"/>.</returns>
+        </member>
         <member name="T:BotDontLie.Providers.TeamsProvider">
             <summary>
             This class implements methods defined in <see cref="T:BotDontLie.Providers.ITeamsProvider"/>.
             </summary>
+        </member>
+        <member name="F:BotDontLie.Providers.TeamsProvider.PartitionKey">
+            <summary>
+            This is the partition key for the Team table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Providers.TeamsProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Providers.TeamsProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure Table connection string.</param>
+            <param name="telemetryClient">ApplicationInsights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Providers.TeamsProvider.UpsertNbaTeamAsync(BotDontLie.Models.TeamEntity)">
+            <summary>
+            Saves a team entity.
+            </summary>
+            <param name="teamEntity">The team to save.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Providers.TeamsProvider.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method to retrieve a <see cref="T:BotDontLie.Models.TeamEntity"/> using the full name.
+            </summary>
+            <param name="teamFullName">The full name for an NBA team.</param>
+            <returns>A unit of execution that returns a <see cref="T:BotDontLie.Models.TeamEntity"/> boxed in.</returns>
+        </member>
+        <member name="M:BotDontLie.Providers.TeamsProvider.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method to retrieve a <see cref="T:BotDontLie.Models.TeamEntity"/> using the team name.
+            </summary>
+            <param name="teamName">The name of the NBA team.</param>
+            <returns>A unit of execution that returns a <see cref="T:BotDontLie.Models.TeamEntity"/> boxed in.</returns>
+        </member>
+        <member name="M:BotDontLie.Providers.TeamsProvider.StoreOrUpdateTeamEntityAsync(BotDontLie.Models.TeamEntity)">
+            <summary>
+            Store or update ticket entity in table storage.
+            </summary>
+            <param name="entity">Represents ticket entity used for storage and retrieval.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> that represents configuration entity is saved or updated.</returns>
         </member>
         <member name="T:BotDontLie.Services.BallDontLieService">
             <summary>
             This class will implement the methods that are defined in the interface <see cref="T:BotDontLie.Services.IBallDontLieService"/>.
             </summary>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.Net.Http.IHttpClientFactory)">
+        <member name="M:BotDontLie.Services.BallDontLieService.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.Net.Http.IHttpClientFactory,BotDontLie.Providers.ITeamsProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:BotDontLie.Services.BallDontLieService"/> class.
             </summary>
             <param name="telemetryClient">Application Insights DI.</param>
             <param name="httpClientFactory">The HTTP Client Factory DI.</param>
+            <param name="teamsProvider">The NBA Teams Provider DI.</param>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.RetrieveAllTeamsAsync">
+        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllTeamsAsync">
             <summary>
             Method implementation to return all 30 NBA franchises.
             </summary>
@@ -709,7 +811,7 @@
             Interface that contains the necessary method definitions to query the BallDontLie API.
             </summary>
         </member>
-        <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveAllTeamsAsync">
+        <member name="M:BotDontLie.Services.IBallDontLieService.SyncAllTeamsAsync">
             <summary>
             Method definition that will retrieve all 30 NBA franchises.
             </summary>
