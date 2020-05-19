@@ -214,15 +214,15 @@ namespace BotDontLie.Bots
 
                     break;
                 case Constants.ListAllGames:
-                    this.telemetryClient.TrackTrace("Querying to get all games from 1979 to present");
+                    this.telemetryClient.TrackTrace("Syncing all games from 1979 to present");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
                     break;
                 case Constants.ListAllPlayers:
-                    this.telemetryClient.TrackTrace("Querying to get all the players");
+                    this.telemetryClient.TrackTrace("Syncing all the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
                 case Constants.ListAllStats:
-                    this.telemetryClient.TrackTrace("Querying to get all the stats for the players");
+                    this.telemetryClient.TrackTrace("Syncing all the stats for the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
                 default:
