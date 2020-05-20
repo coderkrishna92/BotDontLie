@@ -66,7 +66,16 @@ namespace BotDontLie.Providers
         {
             this.telemetryClient.TrackTrace($"GetTeamByFullNameAsync being called for: {teamFullName}");
             await this.EnsureInitializedAsync().ConfigureAwait(false);
-            throw new NotImplementedException();
+
+            if (string.IsNullOrEmpty(teamFullName))
+            {
+                return null;
+            }
+
+            var searchOperation = TableOperation.Retrieve<TeamEntity>(PartitionKey, teamFullName);
+            var searchResult = await this.teamCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+
+            return (TeamEntity)searchResult.Result;
         }
 
         /// <summary>
@@ -78,7 +87,16 @@ namespace BotDontLie.Providers
         {
             this.telemetryClient.TrackTrace($"GetTeamByNameAsync being called for: {teamName}");
             await this.EnsureInitializedAsync().ConfigureAwait(false);
-            throw new NotImplementedException();
+
+            if (string.IsNullOrEmpty(teamName))
+            {
+                return null;
+            }
+
+            var searchOperation = TableOperation.Retrieve<TeamEntity>(PartitionKey, teamName);
+            var searchResult = await this.teamCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+
+            return (TeamEntity)searchResult.Result;
         }
 
         private async Task EnsureInitializedAsync()

@@ -5,6 +5,7 @@
 namespace BotDontLie.Providers
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
     using BotDontLie.Models;
     using BotDontLie.Models.AzureStorage;
@@ -44,7 +45,15 @@ namespace BotDontLie.Providers
         /// <returns>A <see cref="Task"/> which resolves successfully upon the successful saving of data in Azure table storage.</returns>
         public Task UpsertNbaPlayerAsync(PlayerEntity player)
         {
-            throw new NotImplementedException();
+            if (player is null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            player.PartitionKey = PartitionKey;
+            player.RowKey = player.PlayerId.ToString(CultureInfo.InvariantCulture);
+
+            return this.StoreOrUpdatePlayerEntityAsync(player);
         }
 
         private async Task InitializeTableStorageAsync(string connectionString)
@@ -61,6 +70,13 @@ namespace BotDontLie.Providers
         {
             this.telemetryClient.TrackTrace("Ensuring that the Azure Table storage is initialized");
             await this.initializeTask.Value.ConfigureAwait(false);
+        }
+
+        private async Task<TableResult> StoreOrUpdatePlayerEntityAsync(PlayerEntity player)
+        {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+            TableOperation addOrUpdateOperation = TableOperation.InsertOrReplace(player);
+            return await this.playerCloudTable.ExecuteAsync(addOrUpdateOperation).ConfigureAwait(false);
         }
     }
 }
