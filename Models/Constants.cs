@@ -25,9 +25,9 @@ namespace BotDontLie.Models
         public const string ListAllGames = "list all games";
 
         /// <summary>
-        /// This command/constant allows to list all players.
+        /// This command/constant allows to sync all players.
         /// </summary>
-        public const string ListAllPlayers = "list all players";
+        public const string SyncAllPlayers = "sync all players";
 
         /// <summary>
         /// This command/constant allows to list all stats.
@@ -38,5 +38,10 @@ namespace BotDontLie.Models
         /// This constant is representing the TeamInfo.
         /// </summary>
         public const string TeamInfoTableName = "Teams";
+
+        /// <summary>
+        /// This constant is representing the PlayerInfo.
+        /// </summary>
+        public const string PlayerInfoTableName = "Players";
     }
 }

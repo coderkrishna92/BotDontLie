@@ -217,7 +217,7 @@ namespace BotDontLie.Bots
                     this.telemetryClient.TrackTrace("Syncing all games from 1979 to present");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
                     break;
-                case Constants.ListAllPlayers:
+                case Constants.SyncAllPlayers:
                     this.telemetryClient.TrackTrace("Syncing all the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
@@ -241,11 +241,11 @@ namespace BotDontLie.Bots
                 case Constants.TakeATour:
                     this.telemetryClient.TrackTrace("Sending the user tour card");
                     var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
-                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
+                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards), cancellationToken).ConfigureAwait(false);
                     break;
                 default:
                     this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more"), cancellationToken).ConfigureAwait(false);
                     break;
             }
         }

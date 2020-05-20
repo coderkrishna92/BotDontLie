@@ -8,7 +8,7 @@ namespace BotDontLie.Providers
     using BotDontLie.Models;
 
     /// <summary>
-    /// This interface defines the methods to insert data into Azure table storage.
+    /// This interface defines the methods to perform CRUD operations on the Teams table in Azure table storage.
     /// </summary>
     public interface ITeamsProvider
     {
