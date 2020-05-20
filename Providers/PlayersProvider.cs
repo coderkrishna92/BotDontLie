@@ -9,7 +9,6 @@ namespace BotDontLie.Providers
     using BotDontLie.Models;
     using BotDontLie.Models.AzureStorage;
     using Microsoft.ApplicationInsights;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Table;
 
