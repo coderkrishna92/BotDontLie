@@ -18,5 +18,13 @@ namespace BotDontLie.Providers
         /// <param name="player">The player to save.</param>
         /// <returns><see cref="Task"/> that resolves successfully if the data was saved properly.</returns>
         Task UpsertNbaPlayerAsync(PlayerEntity player);
+
+        /// <summary>
+        /// Gets the player by their name.
+        /// </summary>
+        /// <param name="firstName">The first name of the player.</param>
+        /// <param name="lastName">The last name of the player.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="PlayerEntity"/>.</returns>
+        Task<PlayerEntity> GetPlayerEntityByFullNameAsync(string firstName, string lastName);
     }
 }

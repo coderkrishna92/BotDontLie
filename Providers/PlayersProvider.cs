@@ -56,6 +56,11 @@ namespace BotDontLie.Providers
             return this.StoreOrUpdatePlayerEntityAsync(player);
         }
 
+        public async Task<PlayerEntity> GetPlayerEntityByFullNameAsync(string firstName, string lastName)
+        {
+            return null;
+        }
+
         private async Task InitializeTableStorageAsync(string connectionString)
         {
             this.telemetryClient.TrackTrace($"Initializing the table storage: {Constants.PlayerInfoTableName}");
