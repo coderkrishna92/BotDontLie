@@ -5,6 +5,7 @@
 namespace BotDontLie.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Threading.Tasks;
     using BotDontLie.Models;
@@ -56,9 +57,29 @@ namespace BotDontLie.Providers
             return this.StoreOrUpdatePlayerEntityAsync(player);
         }
 
+        /// <summary>
+        /// Having the method to retrieve a player by their first and last name.
+        /// </summary>
+        /// <param name="firstName">The first name of the player to search.</param>
+        /// <param name="lastName">The last name of the player to search.</param>
+        /// <returns>A unit of execution that returns a type of <see cref="PlayerEntity"/>.</returns>
         public async Task<PlayerEntity> GetPlayerEntityByFullNameAsync(string firstName, string lastName)
         {
-            return null;
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+
+            if (string.IsNullOrEmpty(firstName))
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
+
+            var searchOperation = TableOperation.Retrieve<PlayerEntity>(PartitionKey, firstName, new List<string>() { lastName });
+            var searchResult = await this.playerCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+            return (PlayerEntity)searchResult.Result;
         }
 
         private async Task InitializeTableStorageAsync(string connectionString)
