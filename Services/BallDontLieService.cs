@@ -4,9 +4,7 @@
 
 namespace BotDontLie.Services
 {
-    using System;
     using System.Globalization;
-    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using BotDontLie.Models;
