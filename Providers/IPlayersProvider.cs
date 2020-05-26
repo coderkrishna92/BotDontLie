@@ -26,5 +26,12 @@ namespace BotDontLie.Providers
         /// <param name="lastName">The last name of the player.</param>
         /// <returns>A unit of execution that contains a type of <see cref="PlayerEntity"/>.</returns>
         Task<PlayerEntity> GetPlayerEntityByFullNameAsync(string firstName, string lastName);
+
+        /// <summary>
+        /// Gets the player by their ID.
+        /// </summary>
+        /// <param name="playerId">The player ID.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="PlayerEntity"/>.</returns>
+        Task<PlayerEntity> GetPlayerEntityByPlayerIdAsync(long playerId);
     }
 }

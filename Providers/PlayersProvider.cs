@@ -82,6 +82,20 @@ namespace BotDontLie.Providers
             return (PlayerEntity)searchResult.Result;
         }
 
+        /// <summary>
+        /// Method to retrieve the player by their ID.
+        /// </summary>
+        /// <param name="playerId">The player ID.</param>
+        /// <returns>A unit of execution that returns a type of <see cref="PlayerEntity"/>.</returns>
+        public async Task<PlayerEntity> GetPlayerEntityByPlayerIdAsync(long playerId)
+        {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+
+            var searchOperation = TableOperation.Retrieve<PlayerEntity>(PartitionKey, playerId.ToString(CultureInfo.InvariantCulture));
+            var searchResult = await this.playerCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+            return (PlayerEntity)searchResult.Result;
+        }
+
         private async Task InitializeTableStorageAsync(string connectionString)
         {
             this.telemetryClient.TrackTrace($"Initializing the table storage: {Constants.PlayerInfoTableName}");
