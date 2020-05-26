@@ -57,11 +57,23 @@ namespace BotDontLie
                 this.Configuration["StorageConnectionString"],
                 provider.GetRequiredService<TelemetryClient>()));
 
+            // Adding the players provider.
+            services.AddSingleton<IPlayersProvider, PlayersProvider>((provider) => new PlayersProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
+            // Adding the games provider.
+            services.AddSingleton<IGamesProvider, GamesProvider>((provider) => new GamesProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
             // Having the necessary services instantiated.
             services.AddSingleton<IBallDontLieService, BallDontLieService>((provider) => new BallDontLieService(
                 provider.GetRequiredService<TelemetryClient>(),
                 provider.GetRequiredService<IHttpClientFactory>(),
-                provider.GetRequiredService<ITeamsProvider>()));
+                provider.GetRequiredService<ITeamsProvider>(),
+                provider.GetRequiredService<IPlayersProvider>(),
+                provider.GetRequiredService<IGamesProvider>()));
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, NbaBot>((provider) => new NbaBot(

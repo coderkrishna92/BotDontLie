@@ -22,6 +22,8 @@ namespace BotDontLie.Services
         private readonly TelemetryClient telemetryClient;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly ITeamsProvider teamsProvider;
+        private readonly IPlayersProvider playersProvider;
+        private readonly IGamesProvider gamesProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BallDontLieService"/> class.
@@ -29,11 +31,20 @@ namespace BotDontLie.Services
         /// <param name="telemetryClient">Application Insights DI.</param>
         /// <param name="httpClientFactory">The HTTP Client Factory DI.</param>
         /// <param name="teamsProvider">The NBA Teams Provider DI.</param>
-        public BallDontLieService(TelemetryClient telemetryClient, IHttpClientFactory httpClientFactory, ITeamsProvider teamsProvider)
+        /// <param name="playersProvider">The NBA Players Provider DI.</param>
+        /// <param name="gamesProvider">The NBA Games Provider DI.</param>
+        public BallDontLieService(
+            TelemetryClient telemetryClient,
+            IHttpClientFactory httpClientFactory,
+            ITeamsProvider teamsProvider,
+            IPlayersProvider playersProvider,
+            IGamesProvider gamesProvider)
         {
             this.telemetryClient = telemetryClient;
             this.httpClientFactory = httpClientFactory;
             this.teamsProvider = teamsProvider;
+            this.playersProvider = playersProvider;
+            this.gamesProvider = gamesProvider;
         }
 
         /// <summary>
