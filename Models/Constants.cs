@@ -35,13 +35,18 @@ namespace BotDontLie.Models
         public const string ListAllStats = "list all stats";
 
         /// <summary>
-        /// This constant is representing the TeamInfo.
+        /// This constant is representing the TeamInfo table.
         /// </summary>
-        public const string TeamInfoTableName = "Teams";
+        public const string TeamInfoTableName = "TeamsInfo";
 
         /// <summary>
-        /// This constant is representing the PlayerInfo.
+        /// This constant is representing the PlayerInfo table.
         /// </summary>
-        public const string PlayerInfoTableName = "Players";
+        public const string PlayerInfoTableName = "PlayersInfo";
+
+        /// <summary>
+        /// This constant is representing the GamesInfo table.
+        /// </summary>
+        public const string GamesInfoTableName = "GamesInfo";
     }
 }
