@@ -56,6 +56,20 @@ namespace BotDontLie.Providers
             return this.StoreOrUpdateGameEntityAsync(game);
         }
 
+        /// <summary>
+        /// Method to get the game by the game ID.
+        /// </summary>
+        /// <param name="gameId">The game ID to retrieve.</param>
+        /// <returns>A <see cref="Task"/> which contains the type of <see cref="GameEntity"/>.</returns>
+        public async Task<GameEntity> GetGameEntityByGameIdAsync(long gameId)
+        {
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+
+            var searchOperation = TableOperation.Retrieve<GameEntity>(PartitionKey, gameId.ToString(CultureInfo.InvariantCulture));
+            var searchResult = await this.gamesCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+            return (GameEntity)searchResult.Result;
+        }
+
         private async Task InitializeTableStorageAsync(string connectionString)
         {
             this.telemetryClient.TrackTrace($"Initializing the table storage: {Constants.GamesInfoTableName}");

@@ -18,5 +18,12 @@ namespace BotDontLie.Providers
         /// <param name="game">The game to save.</param>
         /// <returns><see cref="Task"/> that resolves successfully if the data was properly saved.</returns>
         Task UpsertNbaGameAsync(GameEntity game);
+
+        /// <summary>
+        /// Retrieves a Game from Azure table storage by the gameId.
+        /// </summary>
+        /// <param name="gameId">The ID of the game itself.</param>
+        /// <returns>A unit of execution, or a <see cref="Task"/> which contains the type of <see cref="GameEntity"/>.</returns>
+        Task<GameEntity> GetGameEntityByGameIdAsync(long gameId);
     }
 }
