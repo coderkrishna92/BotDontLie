@@ -43,5 +43,13 @@ namespace BotDontLie.Services
         /// <param name="teamFullName">The full name of the team (i.e. Oklahoma City Thunder).</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
         Task<Team> RetrieveTeamByFullNameAsync(string teamFullName);
+
+        /// <summary>
+        /// Method definition to get the playerId by the first and last name of the player (i.e. Carmelo Anthony).
+        /// </summary>
+        /// <param name="firstName">The first name of the player.</param>
+        /// <param name="lastName">The last name of the player.</param>
+        /// <returns>A task that contains data of type <see cref="long"/> which represents the playerID.</returns>
+        Task<long> GetPlayerIdByFirstLastNameAsync(string firstName, string lastName);
     }
 }

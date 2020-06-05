@@ -108,6 +108,18 @@ namespace BotDontLie.Services
         }
 
         /// <summary>
+        /// Implementation to get the playerID by querying the first and last name of the player.
+        /// </summary>
+        /// <param name="firstName">The first name of the player.</param>
+        /// <param name="lastName">The last name of the player.</param>
+        /// <returns>A unit of execution that contains a type <see cref="long"/>.</returns>
+        public async Task<long> GetPlayerIdByFirstLastNameAsync(string firstName, string lastName)
+        {
+            var playerOfInterest = await this.playersProvider.GetPlayerEntityByFullNameAsync(firstName, lastName).ConfigureAwait(false);
+            return (long)playerOfInterest?.PlayerId;
+        }
+
+        /// <summary>
         /// Method implementation to get all the stats available.
         /// </summary>
         /// <returns>A unit of execution that contains a type of <see cref="StatsResponse"/>.</returns>
