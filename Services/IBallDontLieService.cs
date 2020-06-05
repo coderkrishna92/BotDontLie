@@ -15,20 +15,26 @@ namespace BotDontLie.Services
         /// <summary>
         /// Method definition that will retrieve all 30 NBA franchises.
         /// </summary>
-        /// <returns>A unit of execution that contains a type of <see cref="TeamsResponse"/>.</returns>
+        /// <returns>A unit of execution that contains a type of <see cref="bool"/> which determines if all franchises have been synced or not.</returns>
         Task<bool> SyncAllTeamsAsync();
+
+        /// <summary>
+        /// Method definition that will get all the players.
+        /// </summary>
+        /// <returns>A unit of execution that contains a type of <see cref="bool"/> which determines if all players have been synced or not.</returns>
+        Task<bool> SyncAllPlayersAsync();
+
+        /// <summary>
+        /// Method definition that will get all the statistics.
+        /// </summary>
+        /// <returns>A unit of execution that contains a type of <see cref="bool"/> which determines if all statistics have been synced or not.</returns>
+        Task<bool> SyncAllStatisticsAsync();
 
         /// <summary>
         /// Method definition that will retrieve all games.
         /// </summary>
         /// <returns>A unit of execution that contains the type of <see cref="GamesResponse"/>.</returns>
-        Task<GamesResponse> RetrieveAllGamesAsync();
-
-        /// <summary>
-        /// Method definition that will retrieve all stats.
-        /// </summary>
-        /// <returns>A unit of execution that contains the type of <see cref="StatsResponse"/>.</returns>
-        Task<StatsResponse> RetrieveAllStatsAsync();
+        Task<bool> SyncAllGamesAsync();
 
         /// <summary>
         /// Method definition that will retrieve a specific NBA franchise by their name.

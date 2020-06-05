@@ -22,7 +22,7 @@ namespace BotDontLie.Models
         /// <summary>
         /// This command/constant allows to query all games.
         /// </summary>
-        public const string ListAllGames = "list all games";
+        public const string SyncAllGames = "sync all games";
 
         /// <summary>
         /// This command/constant allows to sync all players.
@@ -32,7 +32,7 @@ namespace BotDontLie.Models
         /// <summary>
         /// This command/constant allows to list all stats.
         /// </summary>
-        public const string ListAllStats = "list all stats";
+        public const string SyncAllStats = "sync all stats";
 
         /// <summary>
         /// This constant is representing the TeamInfo table.
@@ -48,5 +48,10 @@ namespace BotDontLie.Models
         /// This constant is representing the GamesInfo table.
         /// </summary>
         public const string GamesInfoTableName = "GamesInfo";
+
+        /// <summary>
+        /// This constant is representing the StatisticsInfo table.
+        /// </summary>
+        public const string StatisticsInfoTableName = "StatisticsInfo";
     }
 }

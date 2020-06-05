@@ -396,7 +396,7 @@
             This command/constant allows for querying all teams.
             </summary>
         </member>
-        <member name="F:BotDontLie.Models.Constants.ListAllGames">
+        <member name="F:BotDontLie.Models.Constants.SyncAllGames">
             <summary>
             This command/constant allows to query all games.
             </summary>
@@ -406,7 +406,7 @@
             This command/constant allows to sync all players.
             </summary>
         </member>
-        <member name="F:BotDontLie.Models.Constants.ListAllStats">
+        <member name="F:BotDontLie.Models.Constants.SyncAllStats">
             <summary>
             This command/constant allows to list all stats.
             </summary>
@@ -424,6 +424,11 @@
         <member name="F:BotDontLie.Models.Constants.GamesInfoTableName">
             <summary>
             This constant is representing the GamesInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Models.Constants.StatisticsInfoTableName">
+            <summary>
+            This constant is representing the StatisticsInfo table.
             </summary>
         </member>
         <member name="T:BotDontLie.Models.Game">
@@ -1002,6 +1007,18 @@
             <param name="playerId">The player ID.</param>
             <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.AzureStorage.PlayerEntity"/>.</returns>
         </member>
+        <member name="T:BotDontLie.Providers.IStatisticsProvider">
+            <summary>
+            This interface will define methods to insert table into Azure table storage.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Providers.IStatisticsProvider.UpsertNbaStatisticAsync(BotDontLie.Models.AzureStorage.StatisticsEntity)">
+            <summary>
+            Save or update the NBA statistic.
+            </summary>
+            <param name="statisticsEntity">The statistic entity to save.</param>
+            <returns>A task that would resolve successfully to indicate whether or not data was saved.</returns>
+        </member>
         <member name="T:BotDontLie.Providers.ITeamsProvider">
             <summary>
             This interface defines the methods to perform CRUD operations on the Teams table in Azure table storage.
@@ -1067,6 +1084,30 @@
             <param name="playerId">The player ID.</param>
             <returns>A unit of execution that returns a type of <see cref="T:BotDontLie.Models.AzureStorage.PlayerEntity"/>.</returns>
         </member>
+        <member name="T:BotDontLie.Providers.StatisticsProvider">
+            <summary>
+            This class implements all of the methods defined in <see cref="T:BotDontLie.Providers.IStatisticsProvider"/>.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Providers.StatisticsProvider.PartitionKey">
+            <summary>
+            This is the partition key for the statistics table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Providers.StatisticsProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Providers.StatisticsProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure table storage connection string.</param>
+            <param name="telemetryClient">Application Insights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Providers.StatisticsProvider.UpsertNbaStatisticAsync(BotDontLie.Models.AzureStorage.StatisticsEntity)">
+            <summary>
+            Saves or updates the NBA statistics into Azure Table storage.
+            </summary>
+            <param name="statistic">The statistic to save or update.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that would resolve successfully if the data has been properly saved.</returns>
+        </member>
         <member name="T:BotDontLie.Providers.TeamsProvider">
             <summary>
             This class implements methods defined in <see cref="T:BotDontLie.Providers.ITeamsProvider"/>.
@@ -1117,7 +1158,7 @@
             This class will implement the methods that are defined in the interface <see cref="T:BotDontLie.Services.IBallDontLieService"/>.
             </summary>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.Net.Http.IHttpClientFactory,BotDontLie.Providers.ITeamsProvider,BotDontLie.Providers.IPlayersProvider,BotDontLie.Providers.IGamesProvider)">
+        <member name="M:BotDontLie.Services.BallDontLieService.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.Net.Http.IHttpClientFactory,BotDontLie.Providers.ITeamsProvider,BotDontLie.Providers.IPlayersProvider,BotDontLie.Providers.IGamesProvider,BotDontLie.Providers.IStatisticsProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:BotDontLie.Services.BallDontLieService"/> class.
             </summary>
@@ -1126,18 +1167,25 @@
             <param name="teamsProvider">The NBA Teams Provider DI.</param>
             <param name="playersProvider">The NBA Players Provider DI.</param>
             <param name="gamesProvider">The NBA Games Provider DI.</param>
+            <param name="statisticsProvider">The NBA Statistics Provider DI.</param>
         </member>
         <member name="M:BotDontLie.Services.BallDontLieService.SyncAllTeamsAsync">
             <summary>
             Method implementation to return all 30 NBA franchises.
             </summary>
-            <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Models.TeamsResponse"/>.</returns>
+            <returns>A unit of execution that contains the type of <see cref="T:System.Boolean"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.RetrieveAllGamesAsync">
+        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllGamesAsync">
             <summary>
             Method implementation to get all the games available.
             </summary>
-            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.GamesResponse"/>.</returns>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllPlayersAsync">
+            <summary>
+            Method implementation to get all the players available.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/>.</returns>
         </member>
         <member name="M:BotDontLie.Services.BallDontLieService.GetPlayerIdByFirstLastNameAsync(System.String,System.String)">
             <summary>
@@ -1147,7 +1195,7 @@
             <param name="lastName">The last name of the player.</param>
             <returns>A unit of execution that contains a type <see cref="T:System.Int64"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.RetrieveAllStatsAsync">
+        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllStatisticsAsync">
             <summary>
             Method implementation to get all the stats available.
             </summary>
@@ -1176,19 +1224,25 @@
             <summary>
             Method definition that will retrieve all 30 NBA franchises.
             </summary>
-            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.TeamsResponse"/>.</returns>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all franchises have been synced or not.</returns>
         </member>
-        <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveAllGamesAsync">
+        <member name="M:BotDontLie.Services.IBallDontLieService.SyncAllPlayersAsync">
+            <summary>
+            Method definition that will get all the players.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all players have been synced or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Services.IBallDontLieService.SyncAllStatisticsAsync">
+            <summary>
+            Method definition that will get all the statistics.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all statistics have been synced or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Services.IBallDontLieService.SyncAllGamesAsync">
             <summary>
             Method definition that will retrieve all games.
             </summary>
             <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Models.GamesResponse"/>.</returns>
-        </member>
-        <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveAllStatsAsync">
-            <summary>
-            Method definition that will retrieve all stats.
-            </summary>
-            <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Models.StatsResponse"/>.</returns>
         </member>
         <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveTeamByNameAsync(System.String)">
             <summary>

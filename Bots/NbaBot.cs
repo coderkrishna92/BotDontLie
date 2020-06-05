@@ -205,7 +205,7 @@ namespace BotDontLie.Bots
                     var teamsResponse = await this.ballDontLieService.SyncAllTeamsAsync().ConfigureAwait(false);
                     if (teamsResponse)
                     {
-                        await turnContext.SendActivityAsync(MessageFactory.Text($"All the way from downtown - I am able to sync the teams for you!")).ConfigureAwait(false);
+                        await turnContext.SendActivityAsync(MessageFactory.Text("All the way from downtown - I am able to sync the teams for you!")).ConfigureAwait(false);
                     }
                     else
                     {
@@ -213,15 +213,24 @@ namespace BotDontLie.Bots
                     }
 
                     break;
-                case Constants.ListAllGames:
+                case Constants.SyncAllGames:
                     this.telemetryClient.TrackTrace("Syncing all games from 1979 to present");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results soon")).ConfigureAwait(false);
+                    var gamesResponse = await this.ballDontLieService.SyncAllGamesAsync().ConfigureAwait(false);
+                    if (gamesResponse)
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("I am able to sync the games in the NBA from 1979 to present - that's a lot of data!")).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any data with regards to the games - gotta try again later!")).ConfigureAwait(false);
+                    }
+
                     break;
                 case Constants.SyncAllPlayers:
                     this.telemetryClient.TrackTrace("Syncing all the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
-                case Constants.ListAllStats:
+                case Constants.SyncAllStats:
                     this.telemetryClient.TrackTrace("Syncing all the stats for the players");
                     await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
                     break;
