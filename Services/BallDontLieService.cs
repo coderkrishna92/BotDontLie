@@ -112,7 +112,7 @@ namespace BotDontLie.Services
                 }
                 else
                 {
-                    this.telemetryClient.TrackTrace("Not able to get the games fully");
+                    this.telemetryClient.TrackTrace("Not able to get all games from the API.");
                     return false;
                 }
             }
@@ -125,7 +125,31 @@ namespace BotDontLie.Services
         public async Task<bool> SyncAllPlayersAsync()
         {
             this.telemetryClient.TrackTrace("Requesting to get all players");
-            return true;
+            var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "players")
+            {
+            })
+            {
+                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var playersResponse = JsonConvert.DeserializeObject<PlayersResponse>(responseContent);
+                    foreach (var item in playersResponse.Players)
+                    {
+                        var playerEntity = this.CreatePlayerEntity(item);
+                        await this.playersProvider.UpsertNbaPlayerAsync(playerEntity).ConfigureAwait(false);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    this.telemetryClient.TrackTrace("Not able to get all players");
+                    return false;
+                }
+            }
         }
 
         /// <summary>
@@ -146,10 +170,17 @@ namespace BotDontLie.Services
                 {
                     var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var statsResponse = JsonConvert.DeserializeObject<StatsResponse>(responseContent);
+                    foreach (var item in statsResponse.Statistics)
+                    {
+                        var statisticsEntity = this.CreateStatisticEntity(item);
+                        await this.statisticsProvider.UpsertNbaStatisticAsync(statisticsEntity).ConfigureAwait(false);
+                    }
+
                     return true;
                 }
                 else
                 {
+                    this.telemetryClient.TrackTrace("Not able to get data for statistics");
                     return false;
                 }
             }
@@ -244,6 +275,55 @@ namespace BotDontLie.Services
                 Status = game.Status,
                 VisitorTeam = game.VisitorTeam,
                 VisitorTeamScore = game.VisitorTeamScore,
+            };
+        }
+
+        private PlayerEntity CreatePlayerEntity(Player player)
+        {
+            return new PlayerEntity
+            {
+                PlayerId = player.Id,
+                RowKey = player.Id.ToString(CultureInfo.InvariantCulture),
+                PartitionKey = "NbaPlayer",
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                HeightFeet = player.HeightFeet,
+                HeightInches = player.HeightInches,
+                Position = player.Position,
+                Team = player.Team,
+                WeightPounds = player.WeightPounds,
+            };
+        }
+
+        private StatisticsEntity CreateStatisticEntity(Statistic statistic)
+        {
+            return new StatisticsEntity
+            {
+                StatisticsId = statistic.Id,
+                RowKey = statistic.Id.ToString(CultureInfo.InvariantCulture),
+                PartitionKey = "NbaStatistic",
+                Assists = statistic.Assists,
+                Blocks = statistic.Blocks,
+                DefensiveRebounds = statistic.DefensiveRebounds,
+                FieldGoalPct = statistic.FieldGoalPct,
+                FieldGoalsAttempted = statistic.FieldGoalsAttempted,
+                FieldGoalsMade = statistic.FieldGoalsMade,
+                FreeThrowPct = statistic.FreeThrowPct,
+                FreeThrowsAttempted = statistic.FreeThrowsAttempted,
+                FreeThrowsMade = statistic.FreeThrowsMade,
+                Game = statistic.Game,
+                Minutes = statistic.Minutes,
+                OffensiveRebounds = statistic.OffensiveRebounds,
+                PersonalFouls = statistic.PersonalFouls,
+                Player = statistic.Player,
+                Points = statistic.Points,
+                Rebounds = statistic.Rebounds,
+                Steals = statistic.Steals,
+                Team = statistic.Team,
+                ThreePointFieldGoalPct = statistic.ThreePointFieldGoalPct,
+                ThreePointFieldGoalsAttempted = statistic.ThreePointFieldGoalsAttempted,
+                ThreePointFieldGoalsMade = statistic.ThreePointFieldGoalsMade,
+                Turnover = statistic.Turnover,
             };
         }
     }

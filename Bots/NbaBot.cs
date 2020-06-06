@@ -228,11 +228,29 @@ namespace BotDontLie.Bots
                     break;
                 case Constants.SyncAllPlayers:
                     this.telemetryClient.TrackTrace("Syncing all the players");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
+                    var playersResponse = await this.ballDontLieService.SyncAllPlayersAsync().ConfigureAwait(false);
+                    if (playersResponse)
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Got all the players! Want to build a roster, or you want some information?")).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any of the players data!")).ConfigureAwait(false);
+                    }
+
                     break;
                 case Constants.SyncAllStats:
                     this.telemetryClient.TrackTrace("Syncing all the stats for the players");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("This functionality is in progress, hold on will get your results")).ConfigureAwait(false);
+                    var statsResponse = await this.ballDontLieService.SyncAllStatisticsAsync().ConfigureAwait(false);
+                    if (statsResponse)
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("I am able to get the stats for you - that's a lot of numbers to crunch on it!!")).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any of the statistical data!")).ConfigureAwait(false);
+                    }
+
                     break;
                 default:
                     this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
