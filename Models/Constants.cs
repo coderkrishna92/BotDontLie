@@ -58,5 +58,10 @@ namespace BotDontLie.Models
         /// This is the first command that we can use in the bot.
         /// </summary>
         public const string FindPlayerInformation = "find player information";
+
+        /// <summary>
+        /// This constant is representing the command to find the information of a team.
+        /// </summary>
+        public const string FindTeamInformation = "find team information";
     }
 }

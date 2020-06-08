@@ -283,6 +283,10 @@ namespace BotDontLie.Bots
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Rats! Could not find anything on {playerFirstName} {playerLastName}"), cancellationToken).ConfigureAwait(false);
                 }
             }
+            else if (messageText.Contains(Constants.FindTeamInformation, StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.telemetryClient.TrackTrace("Finding the team information");
+            }
         }
 
         private async Task OnAdaptiveCardSubmitInPersonalChatAsync(string text, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
