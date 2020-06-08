@@ -56,6 +56,20 @@ namespace BotDontLie.Providers
             return this.StoreOrUpdateStatisticEntityAsync(statistic);
         }
 
+        /// <summary>
+        /// This method will be able to retrieve from the statistics table by the ID.
+        /// </summary>
+        /// <param name="statisticsId">The statistics ID.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="StatisticsEntity"/>.</returns>
+        public async Task<StatisticsEntity> GetStatisticsEntityByIdAsync(long statisticsId)
+        {
+            this.telemetryClient.TrackTrace($"Getting the stats for the id: {statisticsId}");
+            await this.EnsureInitializedAsync().ConfigureAwait(false);
+            var searchOperation = TableOperation.Retrieve<StatisticsEntity>(PartitionKey, statisticsId.ToString(CultureInfo.InvariantCulture));
+            var searchResult = await this.statisticsCloudTable.ExecuteAsync(searchOperation).ConfigureAwait(false);
+            return (StatisticsEntity)searchResult.Result;
+        }
+
         private async Task InitializeTableStorageAsync(string connectionString)
         {
             this.telemetryClient.TrackTrace($"Initializing the table storage: {Constants.StatisticsInfoTableName}");

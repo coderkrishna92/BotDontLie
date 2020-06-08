@@ -221,6 +221,29 @@ namespace BotDontLie.Services
         }
 
         /// <summary>
+        /// Method implementation in order to get a specific player.
+        /// </summary>
+        /// <param name="playerId">The ID of the player information to retrieve.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="Player"/>.</returns>
+        public async Task<Player> GetPlayerByIdAsync(long playerId)
+        {
+            this.telemetryClient.TrackTrace($"Getting the player with the playerId: {playerId}");
+            var retrievedPlayer = await this.playersProvider.GetPlayerEntityByPlayerIdAsync(playerId).ConfigureAwait(false);
+
+            return new Player
+            {
+                Id = retrievedPlayer.PlayerId,
+                FirstName = retrievedPlayer.FirstName,
+                LastName = retrievedPlayer.LastName,
+                Team = retrievedPlayer.Team,
+                Position = retrievedPlayer.Position,
+                HeightFeet = retrievedPlayer.HeightFeet,
+                HeightInches = retrievedPlayer.HeightInches,
+                WeightPounds = retrievedPlayer.WeightPounds,
+            };
+        }
+
+        /// <summary>
         /// Method implementation to get a team by their full name (i.e. Oklahoma City Thunder).
         /// </summary>
         /// <param name="teamFullName">The full/formal name of the NBA franchise.</param>

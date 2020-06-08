@@ -253,9 +253,35 @@ namespace BotDontLie.Bots
 
                     break;
                 default:
-                    this.telemetryClient.TrackTrace("Not sure of what's going on here, sending the unrecognized input card");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Not sure of what I can do here, instead take a tour to find out more")).ConfigureAwait(false);
+                    this.telemetryClient.TrackTrace("There may be some other actions taking place");
+                    await this.ActOnMoreInformationAsync(text, turnContext, cancellationToken).ConfigureAwait(false);
                     break;
+            }
+        }
+
+        private async Task ActOnMoreInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            this.telemetryClient.TrackTrace($"There is something to be done: {messageText}");
+            if (messageText.Contains(Constants.FindPlayerInformation, StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.telemetryClient.TrackTrace("Finding the player information");
+                var arrayOfWords = messageText.Split(' ');
+                var playerFirstName = arrayOfWords[3];
+                var playerLastName = arrayOfWords[4];
+
+                var playerId = await this.ballDontLieService.GetPlayerIdByFirstLastNameAsync(playerFirstName, playerLastName).ConfigureAwait(false);
+                var player = await this.ballDontLieService.GetPlayerByIdAsync(playerId).ConfigureAwait(false);
+
+                if (player != null)
+                {
+                    this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Yahoo! Turns out I got your player!"), cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    this.telemetryClient.TrackTrace($"Could not find the player: {player.FirstName} {player.LastName}");
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Rats! Could not find anything on {playerFirstName} {playerLastName}"), cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 

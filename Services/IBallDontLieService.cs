@@ -6,6 +6,7 @@ namespace BotDontLie.Services
 {
     using System.Threading.Tasks;
     using BotDontLie.Models;
+    using BotDontLie.Models.AzureStorage;
 
     /// <summary>
     /// Interface that contains the necessary method definitions to query the BallDontLie API.
@@ -57,5 +58,12 @@ namespace BotDontLie.Services
         /// <param name="lastName">The last name of the player.</param>
         /// <returns>A task that contains data of type <see cref="long"/> which represents the playerID.</returns>
         Task<long> GetPlayerIdByFirstLastNameAsync(string firstName, string lastName);
+
+        /// <summary>
+        /// Method definition to get the player entity by the playerID.
+        /// </summary>
+        /// <param name="playerId">The player ID.</param>
+        /// <returns>A unit of execution that contains a type of <see cref="PlayerEntity"/>.</returns>
+        Task<Player> GetPlayerByIdAsync(long playerId);
     }
 }

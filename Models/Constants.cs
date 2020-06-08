@@ -53,5 +53,10 @@ namespace BotDontLie.Models
         /// This constant is representing the StatisticsInfo table.
         /// </summary>
         public const string StatisticsInfoTableName = "StatisticsInfo";
+
+        /// <summary>
+        /// This is the first command that we can use in the bot.
+        /// </summary>
+        public const string FindPlayerInformation = "find player information";
     }
 }

@@ -18,5 +18,12 @@ namespace BotDontLie.Providers
         /// <param name="statisticsEntity">The statistic entity to save.</param>
         /// <returns>A task that would resolve successfully to indicate whether or not data was saved.</returns>
         Task UpsertNbaStatisticAsync(StatisticsEntity statisticsEntity);
+
+        /// <summary>
+        /// Method definition to get the necessary statistics entity by their ID.
+        /// </summary>
+        /// <param name="statisticsId">The ID of the statistics entities.</param>
+        /// <returns>A unit of execution that contains <see cref="StatisticsEntity"/>.</returns>
+        Task<StatisticsEntity> GetStatisticsEntityByIdAsync(long statisticsId);
     }
 }
