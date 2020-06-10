@@ -286,6 +286,15 @@ namespace BotDontLie.Bots
             else if (messageText.Contains(Constants.FindTeamInformation, StringComparison.InvariantCultureIgnoreCase))
             {
                 this.telemetryClient.TrackTrace("Finding the team information");
+                var arrayOfWords = messageText.Split(' ');
+                if (arrayOfWords.Length == 4)
+                {
+                    this.telemetryClient.TrackTrace("Finding the information of a team by the short name");
+                }
+                else
+                {
+                    this.telemetryClient.TrackTrace("Finding the information of a team by the full name");
+                }
             }
         }
 
