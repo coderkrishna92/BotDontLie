@@ -275,6 +275,7 @@ namespace BotDontLie.Bots
                 if (player != null)
                 {
                     this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
+                    var playerResponseCard = PlayerResponseCard.GetCard(player);
                     await turnContext.SendActivityAsync(MessageFactory.Text("Yahoo! Turns out I got your player!"), cancellationToken).ConfigureAwait(false);
                 }
                 else
@@ -296,8 +297,8 @@ namespace BotDontLie.Bots
                     if (teamByShortName != null)
                     {
                         this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
-                        var responseCard = TeamResponseCard.GetCard(teamByShortName);
-                        await turnContext.SendActivityAsync(MessageFactory.Text("Got your team right here!"), cancellationToken).ConfigureAwait(false);
+                        var teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
+                        await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
