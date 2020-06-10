@@ -296,10 +296,12 @@ namespace BotDontLie.Bots
                     if (teamByShortName != null)
                     {
                         this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
+                        var responseCard = TeamResponseCard.GetCard(teamByShortName);
                         await turnContext.SendActivityAsync(MessageFactory.Text("Got your team right here!"), cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
+                        this.telemetryClient.TrackTrace($"Was not able to find data on: {teamShortName}");
                         await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
                     }
                 }
