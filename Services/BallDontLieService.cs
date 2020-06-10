@@ -203,7 +203,7 @@ namespace BotDontLie.Services
         /// </summary>
         /// <param name="teamName">The team name.</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
-        public async Task<Team> RetrieveTeamByNameAsync(string teamName)
+        public async Task<Team> GetTeamByNameAsync(string teamName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the name: {teamName}");
             var teamsResponse = await this.teamsProvider.GetTeamByNameAsync(teamName).ConfigureAwait(false);
@@ -248,7 +248,7 @@ namespace BotDontLie.Services
         /// </summary>
         /// <param name="teamFullName">The full/formal name of the NBA franchise.</param>
         /// <returns>A unit of execution that contains a type of <see cref="Team"/>.</returns>
-        public async Task<Team> RetrieveTeamByFullNameAsync(string teamFullName)
+        public async Task<Team> GetTeamByFullNameAsync(string teamFullName)
         {
             this.telemetryClient.TrackTrace($"Getting a team by the full name: {teamFullName}");
             var teamsResponse = await this.teamsProvider.GetTeamByFullNameAsync(teamFullName).ConfigureAwait(false);

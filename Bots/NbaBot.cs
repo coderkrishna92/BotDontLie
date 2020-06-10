@@ -290,6 +290,18 @@ namespace BotDontLie.Bots
                 if (arrayOfWords.Length == 4)
                 {
                     this.telemetryClient.TrackTrace("Finding the information of a team by the short name");
+                    var teamShortName = arrayOfWords[3];
+                    var teamByShortName = await this.ballDontLieService.GetTeamByNameAsync(teamShortName).ConfigureAwait(false);
+
+                    if (teamByShortName != null)
+                    {
+                        this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Got your team right here!"), cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
+                    }
                 }
                 else
                 {
