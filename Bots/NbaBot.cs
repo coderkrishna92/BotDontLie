@@ -10,6 +10,7 @@ namespace BotDontLie.Bots
     using System.Threading;
     using System.Threading.Tasks;
     using BotDontLie.Cards;
+    using BotDontLie.Helpers;
     using BotDontLie.Models;
     using BotDontLie.Properties;
     using BotDontLie.Services;
@@ -261,6 +262,7 @@ namespace BotDontLie.Bots
 
         private async Task ActOnMoreInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            Attachment teamResponseCard;
             this.telemetryClient.TrackTrace($"There is something to be done: {messageText}");
             if (messageText.Contains(Constants.FindPlayerInformation, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -297,7 +299,7 @@ namespace BotDontLie.Bots
                     if (teamByShortName != null)
                     {
                         this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
-                        var teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
+                        teamResponseCard = TeamResponseCard.GetCardForShortTeamName(teamByShortName);
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
                     }
                     else
@@ -309,6 +311,20 @@ namespace BotDontLie.Bots
                 else
                 {
                     this.telemetryClient.TrackTrace("Finding the information of a team by the full name");
+                    string[] teamFullName = arrayOfWords.Length == 5 ? arrayOfWords.SubArray(3, 2) : arrayOfWords.SubArray(3, 3);
+                    var teamFullNameStr = string.Join(' ', teamFullName);
+                    var teamByFullName = await this.ballDontLieService.GetTeamByFullNameAsync(teamFullNameStr).ConfigureAwait(false);
+
+                    if (teamByFullName != null)
+                    {
+                        this.telemetryClient.TrackTrace($"Found the team: {teamByFullName?.FullName}");
+                        teamResponseCard = TeamResponseCard.GetCardForFullTeamName(teamByFullName);
+                        await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
+                    }
                 }
             }
         }

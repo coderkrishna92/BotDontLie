@@ -18,7 +18,22 @@ namespace BotDontLie.Cards
         /// </summary>
         /// <param name="team">The team upon which the card will get rendered.</param>
         /// <returns>An attachment to append to a message.</returns>
-        public static Attachment GetCard(Team team)
+        public static Attachment GetCardForShortTeamName(Team team)
+        {
+            if (team is null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// This method will get the response card for a Team when queried by its full name.
+        /// </summary>
+        /// <param name="team">The result of the query for the team by searching the full name.</param>
+        /// <returns>An attachment to append to a message.</returns>
+        public static Attachment GetCardForFullTeamName(Team team)
         {
             if (team is null)
             {
