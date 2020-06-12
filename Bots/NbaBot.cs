@@ -299,7 +299,7 @@ namespace BotDontLie.Bots
                     if (teamByShortName != null)
                     {
                         this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
-                        teamResponseCard = TeamResponseCard.GetCardForShortTeamName(teamByShortName);
+                        teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
                     }
                     else
@@ -318,7 +318,7 @@ namespace BotDontLie.Bots
                     if (teamByFullName != null)
                     {
                         this.telemetryClient.TrackTrace($"Found the team: {teamByFullName?.FullName}");
-                        teamResponseCard = TeamResponseCard.GetCardForFullTeamName(teamByFullName);
+                        teamResponseCard = TeamResponseCard.GetCard(teamByFullName);
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
                     }
                     else
