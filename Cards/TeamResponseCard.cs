@@ -5,6 +5,8 @@
 namespace BotDontLie.Cards
 {
     using System;
+    using System.Collections.Generic;
+    using AdaptiveCards;
     using BotDontLie.Models;
     using Microsoft.Bot.Schema;
 
@@ -25,7 +27,23 @@ namespace BotDontLie.Cards
                 throw new ArgumentNullException(nameof(team));
             }
 
-            return null;
+            AdaptiveCard teamCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 2))
+            {
+                Body = new List<AdaptiveElement>
+                {
+                    new AdaptiveTextBlock
+                    {
+                        Weight = AdaptiveTextWeight.Default,
+                        Text = team.Abbreviation,
+                    },
+                },
+            };
+
+            return new Attachment
+            {
+                ContentType = AdaptiveCard.ContentType,
+                Content = teamCard,
+            };
         }
     }
 }
