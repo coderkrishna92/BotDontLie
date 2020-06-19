@@ -72,6 +72,30 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A unit of execution.</returns>
         </member>
+        <member name="T:BotDontLie.Cards.PlayerResponseCard">
+            <summary>
+            This class is the player response card.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Cards.PlayerResponseCard.GetCard(BotDontLie.Models.Player)">
+            <summary>
+            This method will render the response card for a player.
+            </summary>
+            <param name="player">The player information to render in the response card.</param>
+            <returns>An attachment to append to a message.</returns>
+        </member>
+        <member name="T:BotDontLie.Cards.TeamResponseCard">
+            <summary>
+            This class represents the response card for the team query.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Cards.TeamResponseCard.GetCard(BotDontLie.Models.Team)">
+            <summary>
+            This method will get the response card for a Team.
+            </summary>
+            <param name="team">The team upon which the card will get rendered.</param>
+            <returns>An attachment to append to a message.</returns>
+        </member>
         <member name="T:BotDontLie.Cards.TourCarousel">
             <summary>
             This class is for rendering the tour carousel.
@@ -115,6 +139,21 @@
             The method that will posting messages.
             </summary>
             <returns>A unit of execution.</returns>
+        </member>
+        <member name="T:BotDontLie.Helpers.ArrayExtensions">
+            <summary>
+            This class will be used for array extensions.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Helpers.ArrayExtensions.SubArray``1(``0[],System.Int32,System.Int32)">
+            <summary>
+            A method that will generate a sub array given an index, and the length of selection.
+            </summary>
+            <typeparam name="T">The type of the array.</typeparam>
+            <param name="data">The array itself.</param>
+            <param name="index">The starting point of sub array extraction.</param>
+            <param name="length">The length of the sub array.</param>
+            <returns>A sub array of type T.</returns>
         </member>
         <member name="T:BotDontLie.Models.AzureStorage.GameEntity">
             <summary>
@@ -429,6 +468,16 @@
         <member name="F:BotDontLie.Models.Constants.StatisticsInfoTableName">
             <summary>
             This constant is representing the StatisticsInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Models.Constants.FindPlayerInformation">
+            <summary>
+            This is the first command that we can use in the bot.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Models.Constants.FindTeamInformation">
+            <summary>
+            This constant is representing the command to find the information of a team.
             </summary>
         </member>
         <member name="T:BotDontLie.Models.Game">
@@ -920,9 +969,19 @@
               Looks up a localized string similar to Find Teams.
             </summary>
         </member>
+        <member name="P:BotDontLie.Properties.BotResource.PlayerFullNameFormat">
+            <summary>
+              Looks up a localized string similar to {0} {1}.
+            </summary>
+        </member>
         <member name="P:BotDontLie.Properties.BotResource.TakeATourCTATitle">
             <summary>
               Looks up a localized string similar to Take a tour.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Properties.BotResource.TeamResponseTitleText">
+            <summary>
+              Looks up a localized string similar to NBA Franchise.
             </summary>
         </member>
         <member name="P:BotDontLie.Properties.BotResource.WelcomeText">
@@ -1019,6 +1078,13 @@
             <param name="statisticsEntity">The statistic entity to save.</param>
             <returns>A task that would resolve successfully to indicate whether or not data was saved.</returns>
         </member>
+        <member name="M:BotDontLie.Providers.IStatisticsProvider.GetStatisticsEntityByIdAsync(System.Int64)">
+            <summary>
+            Method definition to get the necessary statistics entity by their ID.
+            </summary>
+            <param name="statisticsId">The ID of the statistics entities.</param>
+            <returns>A unit of execution that contains <see cref="T:BotDontLie.Models.AzureStorage.StatisticsEntity"/>.</returns>
+        </member>
         <member name="T:BotDontLie.Providers.ITeamsProvider">
             <summary>
             This interface defines the methods to perform CRUD operations on the Teams table in Azure table storage.
@@ -1108,6 +1174,13 @@
             <param name="statistic">The statistic to save or update.</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task"/> that would resolve successfully if the data has been properly saved.</returns>
         </member>
+        <member name="M:BotDontLie.Providers.StatisticsProvider.GetStatisticsEntityByIdAsync(System.Int64)">
+            <summary>
+            This method will be able to retrieve from the statistics table by the ID.
+            </summary>
+            <param name="statisticsId">The statistics ID.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.AzureStorage.StatisticsEntity"/>.</returns>
+        </member>
         <member name="T:BotDontLie.Providers.TeamsProvider">
             <summary>
             This class implements methods defined in <see cref="T:BotDontLie.Providers.ITeamsProvider"/>.
@@ -1187,6 +1260,12 @@
             </summary>
             <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/>.</returns>
         </member>
+        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllStatisticsAsync">
+            <summary>
+            Method implementation to get all the stats available.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.StatsResponse"/>.</returns>
+        </member>
         <member name="M:BotDontLie.Services.BallDontLieService.GetPlayerIdByFirstLastNameAsync(System.String,System.String)">
             <summary>
             Implementation to get the playerID by querying the first and last name of the player.
@@ -1195,20 +1274,21 @@
             <param name="lastName">The last name of the player.</param>
             <returns>A unit of execution that contains a type <see cref="T:System.Int64"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.SyncAllStatisticsAsync">
-            <summary>
-            Method implementation to get all the stats available.
-            </summary>
-            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.StatsResponse"/>.</returns>
-        </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.RetrieveTeamByNameAsync(System.String)">
+        <member name="M:BotDontLie.Services.BallDontLieService.GetTeamByNameAsync(System.String)">
             <summary>
             Method implementation to get a team by their name (i.e. Knicks).
             </summary>
             <param name="teamName">The team name.</param>
             <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.Team"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.BallDontLieService.RetrieveTeamByFullNameAsync(System.String)">
+        <member name="M:BotDontLie.Services.BallDontLieService.GetPlayerByIdAsync(System.Int64)">
+            <summary>
+            Method implementation in order to get a specific player.
+            </summary>
+            <param name="playerId">The ID of the player information to retrieve.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.Player"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Services.BallDontLieService.GetTeamByFullNameAsync(System.String)">
             <summary>
             Method implementation to get a team by their full name (i.e. Oklahoma City Thunder).
             </summary>
@@ -1244,14 +1324,14 @@
             </summary>
             <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Models.GamesResponse"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveTeamByNameAsync(System.String)">
+        <member name="M:BotDontLie.Services.IBallDontLieService.GetTeamByNameAsync(System.String)">
             <summary>
             Method definition that will retrieve a specific NBA franchise by their name.
             </summary>
             <param name="teamName">The name of the team (not the full name).</param>
             <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Models.Team"/>.</returns>
         </member>
-        <member name="M:BotDontLie.Services.IBallDontLieService.RetrieveTeamByFullNameAsync(System.String)">
+        <member name="M:BotDontLie.Services.IBallDontLieService.GetTeamByFullNameAsync(System.String)">
             <summary>
             Method definition that will retrieve a specific NBA franchise by their full name.
             </summary>
@@ -1265,6 +1345,13 @@
             <param name="firstName">The first name of the player.</param>
             <param name="lastName">The last name of the player.</param>
             <returns>A task that contains data of type <see cref="T:System.Int64"/> which represents the playerID.</returns>
+        </member>
+        <member name="M:BotDontLie.Services.IBallDontLieService.GetPlayerByIdAsync(System.Int64)">
+            <summary>
+            Method definition to get the player entity by the playerID.
+            </summary>
+            <param name="playerId">The player ID.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Models.AzureStorage.PlayerEntity"/>.</returns>
         </member>
         <member name="T:BotDontLie.Startup">
             <summary>

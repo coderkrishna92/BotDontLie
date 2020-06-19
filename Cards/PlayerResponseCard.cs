@@ -6,8 +6,10 @@ namespace BotDontLie.Cards
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using AdaptiveCards;
     using BotDontLie.Models;
+    using BotDontLie.Properties;
     using Microsoft.Bot.Schema;
 
     /// <summary>
@@ -33,12 +35,7 @@ namespace BotDontLie.Cards
                 {
                     new AdaptiveTextBlock
                     {
-                        Text = player.FirstName,
-                        Wrap = true,
-                    },
-                    new AdaptiveTextBlock
-                    {
-                        Text = player.LastName,
+                        Text = string.Format(CultureInfo.InvariantCulture, BotResource.PlayerFullNameFormat, player.FirstName, player.LastName),
                         Wrap = true,
                     },
                 },

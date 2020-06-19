@@ -115,11 +115,29 @@ namespace BotDontLie.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1}.
+        /// </summary>
+        public static string PlayerFullNameFormat {
+            get {
+                return ResourceManager.GetString("PlayerFullNameFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take a tour.
         /// </summary>
         public static string TakeATourCTATitle {
             get {
                 return ResourceManager.GetString("TakeATourCTATitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NBA Franchise.
+        /// </summary>
+        public static string TeamResponseTitleText {
+            get {
+                return ResourceManager.GetString("TeamResponseTitleText", resourceCulture);
             }
         }
         

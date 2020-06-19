@@ -8,6 +8,7 @@ namespace BotDontLie.Cards
     using System.Collections.Generic;
     using AdaptiveCards;
     using BotDontLie.Models;
+    using BotDontLie.Properties;
     using Microsoft.Bot.Schema;
 
     /// <summary>
@@ -33,8 +34,9 @@ namespace BotDontLie.Cards
                 {
                     new AdaptiveTextBlock
                     {
-                        Weight = AdaptiveTextWeight.Default,
-                        Text = team.Abbreviation,
+                        Weight = AdaptiveTextWeight.Bolder,
+                        Text = BotResource.TeamResponseTitleText,
+                        Size = AdaptiveTextSize.Medium,
                     },
                 },
             };

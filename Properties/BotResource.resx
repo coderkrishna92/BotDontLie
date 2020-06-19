@@ -135,8 +135,16 @@
   <data name="FindTeamsTitleText" xml:space="preserve">
     <value>Find Teams</value>
   </data>
+  <data name="PlayerFullNameFormat" xml:space="preserve">
+    <value>{0} {1}</value>
+    <comment>The placeholders {0} and {1} are for the first and last name of the player.</comment>
+  </data>
   <data name="TakeATourCTATitle" xml:space="preserve">
     <value>Take a tour</value>
+  </data>
+  <data name="TeamResponseTitleText" xml:space="preserve">
+    <value>NBA Franchise</value>
+    <comment>This is the title of the NBA franchise card</comment>
   </data>
   <data name="WelcomeText" xml:space="preserve">
     <value>Hello</value>
