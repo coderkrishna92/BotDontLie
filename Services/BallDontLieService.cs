@@ -59,28 +59,26 @@ namespace BotDontLie.Services
             this.telemetryClient.TrackTrace("Requesting to get all NBA teams");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "teams")
+            using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "teams")
             {
-            })
+            };
+            var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
+                foreach (var item in teamsResponse.Teams)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
-                    foreach (var item in teamsResponse.Teams)
-                    {
-                        var teamEntity = this.CreateTeamEntity(item);
-                        await this.teamsProvider.UpsertNbaTeamAsync(teamEntity).ConfigureAwait(false);
-                    }
+                    var teamEntity = this.CreateTeamEntity(item);
+                    await this.teamsProvider.UpsertNbaTeamAsync(teamEntity).ConfigureAwait(false);
+                }
 
-                    return true;
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace("Not able to get the teams list fully");
-                    return false;
-                }
+                return true;
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace("Not able to get the teams list fully");
+                return false;
             }
         }
 
@@ -93,28 +91,26 @@ namespace BotDontLie.Services
             this.telemetryClient.TrackTrace("Requesting to get all games");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "games")
+            using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "games")
             {
-            })
+            };
+            var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(responseContent);
+                foreach (var item in gamesResponse.Games)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(responseContent);
-                    foreach (var item in gamesResponse.Games)
-                    {
-                        var gameEntity = this.CreateGameEntity(item);
-                        await this.gamesProvider.UpsertNbaGameAsync(gameEntity).ConfigureAwait(false);
-                    }
+                    var gameEntity = this.CreateGameEntity(item);
+                    await this.gamesProvider.UpsertNbaGameAsync(gameEntity).ConfigureAwait(false);
+                }
 
-                    return true;
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace("Not able to get all games from the API.");
-                    return false;
-                }
+                return true;
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace("Not able to get all games from the API.");
+                return false;
             }
         }
 
@@ -127,28 +123,26 @@ namespace BotDontLie.Services
             this.telemetryClient.TrackTrace("Requesting to get all players");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "players")
+            using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "players")
             {
-            })
+            };
+            var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var playersResponse = JsonConvert.DeserializeObject<PlayersResponse>(responseContent);
+                foreach (var item in playersResponse.Players)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var playersResponse = JsonConvert.DeserializeObject<PlayersResponse>(responseContent);
-                    foreach (var item in playersResponse.Players)
-                    {
-                        var playerEntity = this.CreatePlayerEntity(item);
-                        await this.playersProvider.UpsertNbaPlayerAsync(playerEntity).ConfigureAwait(false);
-                    }
+                    var playerEntity = this.CreatePlayerEntity(item);
+                    await this.playersProvider.UpsertNbaPlayerAsync(playerEntity).ConfigureAwait(false);
+                }
 
-                    return true;
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace("Not able to get all players");
-                    return false;
-                }
+                return true;
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace("Not able to get all players");
+                return false;
             }
         }
 
@@ -161,28 +155,26 @@ namespace BotDontLie.Services
             this.telemetryClient.TrackTrace("Requesting to get all NBA stats");
             var httpClient = this.httpClientFactory.CreateClient("BallDontLieAPI");
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "stats")
+            using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "stats")
             {
-            })
+            };
+            var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var statsResponse = JsonConvert.DeserializeObject<StatsResponse>(responseContent);
+                foreach (var item in statsResponse.Statistics)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var statsResponse = JsonConvert.DeserializeObject<StatsResponse>(responseContent);
-                    foreach (var item in statsResponse.Statistics)
-                    {
-                        var statisticsEntity = this.CreateStatisticEntity(item);
-                        await this.statisticsProvider.UpsertNbaStatisticAsync(statisticsEntity).ConfigureAwait(false);
-                    }
+                    var statisticsEntity = this.CreateStatisticEntity(item);
+                    await this.statisticsProvider.UpsertNbaStatisticAsync(statisticsEntity).ConfigureAwait(false);
+                }
 
-                    return true;
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace("Not able to get data for statistics");
-                    return false;
-                }
+                return true;
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace("Not able to get data for statistics");
+                return false;
             }
         }
 

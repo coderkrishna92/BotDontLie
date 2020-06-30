@@ -59,20 +59,13 @@ namespace BotDontLie.Bots
                 throw new ArgumentNullException(nameof(turnContext));
             }
 
-            switch (turnContext.Activity.Type)
+            return turnContext.Activity.Type switch
             {
-                case ActivityTypes.Message:
-                    return this.OnMessageActivityAsync(new DelegatingTurnContext<IMessageActivity>(turnContext), cancellationToken);
-
-                case ActivityTypes.ConversationUpdate:
-                    return this.OnConversationUpdateActivityAsync(new DelegatingTurnContext<IConversationUpdateActivity>(turnContext), cancellationToken);
-
-                case ActivityTypes.MessageReaction:
-                    return this.OnMessageReactionActivityAsync(new DelegatingTurnContext<IMessageReactionActivity>(turnContext), cancellationToken);
-
-                default:
-                    return base.OnTurnAsync(turnContext, cancellationToken);
-            }
+                ActivityTypes.Message => this.OnMessageActivityAsync(new DelegatingTurnContext<IMessageActivity>(turnContext), cancellationToken),
+                ActivityTypes.ConversationUpdate => this.OnConversationUpdateActivityAsync(new DelegatingTurnContext<IConversationUpdateActivity>(turnContext), cancellationToken),
+                ActivityTypes.MessageReaction => this.OnMessageReactionActivityAsync(new DelegatingTurnContext<IMessageReactionActivity>(turnContext), cancellationToken),
+                _ => base.OnTurnAsync(turnContext, cancellationToken),
+            };
         }
 
         /// <summary>
@@ -262,7 +255,7 @@ namespace BotDontLie.Bots
 
         private async Task ActOnMoreInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            Attachment teamResponseCard;
+            Attachment teamResponseCard, playerResponseCard;
             this.telemetryClient.TrackTrace($"There is something to be done: {messageText}");
             if (messageText.Contains(Constants.FindPlayerInformation, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -277,8 +270,8 @@ namespace BotDontLie.Bots
                 if (player != null)
                 {
                     this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
-                    var playerResponseCard = PlayerResponseCard.GetCard(player);
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Yahoo! Turns out I got your player!"), cancellationToken).ConfigureAwait(false);
+                    playerResponseCard = PlayerResponseCard.GetCard(player);
+                    await turnContext.SendActivityAsync(MessageFactory.Attachment(playerResponseCard), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
