@@ -1,37 +1,40 @@
-﻿// <copyright file="Game.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="GameEntity.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Models.AzureStorage
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.WindowsAzure.Storage.Table;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models a single game.
+    /// This model defines the properties that are to be captured as part of the GameInfo table.
     /// </summary>
-    public class Game
+    public class GameEntity : TableEntity
     {
         /// <summary>
-        /// Gets or sets the id.
+        /// Gets or sets the gameId.
         /// </summary>
-        [JsonProperty("id")]
-        public long Id { get; set; }
+        [Key]
+        [JsonProperty("GameId")]
+        public long GameId { get; set; }
 
         /// <summary>
-        /// Gets or sets the date.
+        /// Gets or sets the date of the game.
         /// </summary>
         [JsonProperty("date")]
         public DateTimeOffset Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the home_team.
+        /// Gets or sets the home team.
         /// </summary>
         [JsonProperty("home_team")]
         public Team HomeTeam { get; set; }
 
         /// <summary>
-        /// Gets or sets the home_team_score.
+        /// Gets or sets the home team score.
         /// </summary>
         [JsonProperty("home_team_score")]
         public long HomeTeamScore { get; set; }
@@ -43,7 +46,7 @@ namespace BotDontLie.Models
         public long Period { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the game happened in the postseason.
+        /// Gets or sets a value indicating whether or not the game was in the postseason.
         /// </summary>
         [JsonProperty("postseason")]
         public bool Postseason { get; set; }
@@ -55,25 +58,25 @@ namespace BotDontLie.Models
         public long Season { get; set; }
 
         /// <summary>
-        /// Gets or sets the status.
+        /// Gets or sets the status of the game.
         /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the time.
+        /// Gets or sets the time of the game.
         /// </summary>
         [JsonProperty("time")]
         public string Time { get; set; }
 
         /// <summary>
-        /// Gets or sets the visitor_team.
+        /// Gets or sets the visitor team.
         /// </summary>
         [JsonProperty("visitor_team")]
         public Team VisitorTeam { get; set; }
 
         /// <summary>
-        /// Gets or sets the visitor_team_score.
+        /// Gets or sets the visitor team score.
         /// </summary>
         [JsonProperty("visitor_team_score")]
         public long VisitorTeamScore { get; set; }

@@ -4,7 +4,11 @@
 
 namespace BotDontLie
 {
+    using System;
+    using System.Net.Http;
     using BotDontLie.Bots;
+    using BotDontLie.Providers;
+    using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -48,14 +52,47 @@ namespace BotDontLie
             // Create the Bot App Credentials.
             services.AddSingleton(new MicrosoftAppCredentials(this.Configuration["MicrosoftAppId"], this.Configuration["MicrosoftAppPassword"]));
 
+            // Adding the teams provider.
+            services.AddSingleton<ITeamsProvider, TeamsProvider>((provider) => new TeamsProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
+            // Adding the players provider.
+            services.AddSingleton<IPlayersProvider, PlayersProvider>((provider) => new PlayersProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
+            // Adding the games provider.
+            services.AddSingleton<IGamesProvider, GamesProvider>((provider) => new GamesProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
+            // Adding the statistics provider.
+            services.AddSingleton<IStatisticsProvider, StatisticsProvider>((provider) => new StatisticsProvider(
+                this.Configuration["StorageConnectionString"],
+                provider.GetRequiredService<TelemetryClient>()));
+
+            // Having the necessary services instantiated.
+            services.AddSingleton<IBallDontLieService, BallDontLieService>((provider) => new BallDontLieService(
+                provider.GetRequiredService<TelemetryClient>(),
+                provider.GetRequiredService<IHttpClientFactory>(),
+                provider.GetRequiredService<ITeamsProvider>(),
+                provider.GetRequiredService<IPlayersProvider>(),
+                provider.GetRequiredService<IGamesProvider>(),
+                provider.GetRequiredService<IStatisticsProvider>()));
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, NbaBot>((provider) => new NbaBot(
                 provider.GetRequiredService<TelemetryClient>(),
                 provider.GetRequiredService<MicrosoftAppCredentials>(),
+                provider.GetRequiredService<IBallDontLieService>(),
                 this.Configuration["AppBaseUri"]));
 
             // Adding the HttpClient.
-            services.AddHttpClient();
+            services.AddHttpClient("BallDontLieAPI", c =>
+            {
+                c.BaseAddress = new Uri(this.Configuration["BallDontLieApiUrl"]);
+            });
 
             // Adding the ApplicationInsights telemetry.
             services.AddApplicationInsightsTelemetry();

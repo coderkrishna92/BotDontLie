@@ -1,4 +1,4 @@
-﻿// <copyright file="PlayersResponse.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="StatsResponse.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
@@ -8,18 +8,18 @@ namespace BotDontLie.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models the players response.
+    /// This class defines the StatsResponse.
     /// </summary>
-    public class PlayersResponse
+    public class StatsResponse
     {
         /// <summary>
-        /// Gets or sets the list of players.
+        /// Gets or sets the necessary statistics.
         /// </summary>
         [JsonProperty("data")]
-        public List<Player> Players { get; set; }
+        public List<Statistic> Statistics { get; set; }
 
         /// <summary>
-        /// Gets or sets the meta.
+        /// Gets or sets the meta data.
         /// </summary>
         [JsonProperty("meta")]
         public Meta Meta { get; set; }

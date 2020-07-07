@@ -1,24 +1,27 @@
-﻿// <copyright file="Player.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="PlayerEntity.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Models.AzureStorage
 {
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.WindowsAzure.Storage.Table;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class defines the player.
+    /// This model represents the player entity.
     /// </summary>
-    public class Player
+    public class PlayerEntity : TableEntity
     {
         /// <summary>
-        /// Gets or sets the player id.
+        /// Gets or sets the player ID.
         /// </summary>
-        [JsonProperty("id")]
-        public long Id { get; set; }
+        [Key]
+        [JsonProperty("PlayerId")]
+        public long PlayerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the player first_name.
+        /// Gets or sets the first_name.
         /// </summary>
         [JsonProperty("first_name")]
         public string FirstName { get; set; }

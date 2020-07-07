@@ -1,4 +1,4 @@
-﻿// <copyright file="Game.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="StatsGame.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace BotDontLie.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models a single game.
+    /// This class defines the game object with regards to the statistics response.
     /// </summary>
-    public class Game
+    public class StatsGame
     {
         /// <summary>
         /// Gets or sets the id.
@@ -25,25 +25,25 @@ namespace BotDontLie.Models
         public DateTimeOffset Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the home_team.
+        /// Gets or sets the home team id.
         /// </summary>
-        [JsonProperty("home_team")]
-        public Team HomeTeam { get; set; }
+        [JsonProperty("home_team_id")]
+        public long HomeTeamId { get; set; }
 
         /// <summary>
-        /// Gets or sets the home_team_score.
+        /// Gets or sets the home team name.
         /// </summary>
         [JsonProperty("home_team_score")]
         public long HomeTeamScore { get; set; }
 
         /// <summary>
-        /// Gets or sets the period.
+        /// Gets or sets the period (or even the quarter).
         /// </summary>
         [JsonProperty("period")]
         public long Period { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the game happened in the postseason.
+        /// Gets or sets a value indicating whether or not a game is in the postseason.
         /// </summary>
         [JsonProperty("postseason")]
         public bool Postseason { get; set; }
@@ -67,13 +67,13 @@ namespace BotDontLie.Models
         public string Time { get; set; }
 
         /// <summary>
-        /// Gets or sets the visitor_team.
+        /// Gets or sets the visitor team id.
         /// </summary>
-        [JsonProperty("visitor_team")]
-        public Team VisitorTeam { get; set; }
+        [JsonProperty("visitor_team_id")]
+        public long VisitorTeamId { get; set; }
 
         /// <summary>
-        /// Gets or sets the visitor_team_score.
+        /// Gets or sets the visitor team score.
         /// </summary>
         [JsonProperty("visitor_team_score")]
         public long VisitorTeamScore { get; set; }

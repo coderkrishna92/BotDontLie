@@ -1,21 +1,24 @@
-﻿// <copyright file="Team.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="TeamEntity.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
 namespace BotDontLie.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.WindowsAzure.Storage.Table;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models the team.
+    /// This class defines the NBA Team to be stored in Azure table storage.
     /// </summary>
-    public class Team
+    public class TeamEntity : TableEntity
     {
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
-        [JsonProperty("id")]
-        public long Id { get; set; }
+        [Key]
+        [JsonProperty("TeamId")]
+        public long TeamId { get; set; }
 
         /// <summary>
         /// Gets or sets the abbreviation.
