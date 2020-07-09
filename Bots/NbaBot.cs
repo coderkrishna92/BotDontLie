@@ -255,70 +255,81 @@ namespace BotDontLie.Bots
 
         private async Task ActOnMoreInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            Attachment teamResponseCard, playerResponseCard;
             this.telemetryClient.TrackTrace($"There is something to be done: {messageText}");
             if (messageText.Contains(Constants.FindPlayerInformation, StringComparison.InvariantCultureIgnoreCase))
             {
                 this.telemetryClient.TrackTrace("Finding the player information");
-                var arrayOfWords = messageText.Split(' ');
-                var playerFirstName = arrayOfWords[3];
-                var playerLastName = arrayOfWords[4];
-
-                var playerId = await this.ballDontLieService.GetPlayerIdByFirstLastNameAsync(playerFirstName, playerLastName).ConfigureAwait(false);
-                var player = await this.ballDontLieService.GetPlayerByIdAsync(playerId).ConfigureAwait(false);
-
-                if (player != null)
-                {
-                    this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
-                    playerResponseCard = PlayerResponseCard.GetCard(player);
-                    await turnContext.SendActivityAsync(MessageFactory.Attachment(playerResponseCard), cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace($"Could not find the player: {player.FirstName} {player.LastName}");
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Rats! Could not find anything on {playerFirstName} {playerLastName}"), cancellationToken).ConfigureAwait(false);
-                }
+                await this.GetPlayerInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
             }
             else if (messageText.Contains(Constants.FindTeamInformation, StringComparison.InvariantCultureIgnoreCase))
             {
                 this.telemetryClient.TrackTrace("Finding the team information");
-                var arrayOfWords = messageText.Split(' ');
-                if (arrayOfWords.Length == 4)
-                {
-                    this.telemetryClient.TrackTrace("Finding the information of a team by the short name");
-                    var teamShortName = arrayOfWords[3];
-                    var teamByShortName = await this.ballDontLieService.GetTeamByNameAsync(teamShortName).ConfigureAwait(false);
+                await this.GetTeamInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
+            }
+        }
 
-                    if (teamByShortName != null)
-                    {
-                        this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
-                        teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
-                        await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        this.telemetryClient.TrackTrace($"Was not able to find data on: {teamShortName}");
-                        await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
-                    }
+        private async Task GetTeamInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            Attachment teamResponseCard;
+            var arrayOfWords = messageText.Split(' ');
+            if (arrayOfWords.Length == 4)
+            {
+                this.telemetryClient.TrackTrace("Finding the information of a team by the short name");
+                var teamShortName = arrayOfWords[3];
+                var teamByShortName = await this.ballDontLieService.GetTeamByNameAsync(teamShortName).ConfigureAwait(false);
+
+                if (teamByShortName != null)
+                {
+                    this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
+                    teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
+                    await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    this.telemetryClient.TrackTrace("Finding the information of a team by the full name");
-                    string[] teamFullName = arrayOfWords.Length == 5 ? arrayOfWords.SubArray(3, 2) : arrayOfWords.SubArray(3, 3);
-                    var teamFullNameStr = string.Join(' ', teamFullName);
-                    var teamByFullName = await this.ballDontLieService.GetTeamByFullNameAsync(teamFullNameStr).ConfigureAwait(false);
-
-                    if (teamByFullName != null)
-                    {
-                        this.telemetryClient.TrackTrace($"Found the team: {teamByFullName?.FullName}");
-                        teamResponseCard = TeamResponseCard.GetCard(teamByFullName);
-                        await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
-                    }
+                    this.telemetryClient.TrackTrace($"Was not able to find data on: {teamShortName}");
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
                 }
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace("Finding the information of a team by the full name");
+                string[] teamFullName = TeamHelpers.ExtractTeamName(arrayOfWords);
+                var teamFullNameStr = TeamHelpers.GetTeamFullNameStr(teamFullName);
+                var teamByFullName = await this.ballDontLieService.GetTeamByFullNameAsync(teamFullNameStr).ConfigureAwait(false);
+
+                if (teamByFullName != null)
+                {
+                    this.telemetryClient.TrackTrace($"Found the team: {teamByFullName?.FullName}");
+                    teamResponseCard = TeamResponseCard.GetCard(teamByFullName);
+                    await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private async Task GetPlayerInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            Attachment playerResponseCard;
+            var arrayOfWords = messageText.Split(' ');
+            var playerFirstName = arrayOfWords[3];
+            var playerLastName = arrayOfWords[4];
+
+            var playerId = await this.ballDontLieService.GetPlayerIdByFirstLastNameAsync(playerFirstName, playerLastName).ConfigureAwait(false);
+            var player = await this.ballDontLieService.GetPlayerByIdAsync(playerId).ConfigureAwait(false);
+
+            if (player != null)
+            {
+                this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
+                playerResponseCard = PlayerResponseCard.GetCard(player);
+                await turnContext.SendActivityAsync(MessageFactory.Attachment(playerResponseCard), cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                this.telemetryClient.TrackTrace($"Could not find the player: {player.FirstName} {player.LastName}");
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Rats! Could not find anything on {playerFirstName} {playerLastName}"), cancellationToken).ConfigureAwait(false);
             }
         }
 
