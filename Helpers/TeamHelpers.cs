@@ -9,14 +9,14 @@ namespace BotDontLie.Helpers
     /// <summary>
     /// This class defines the various helper methods with regards to the teams.
     /// </summary>
-    public static class TeamHelpers
+    public class TeamHelpers : ITeamHelpers
     {
         /// <summary>
         /// This method extracts the team full name.
         /// </summary>
         /// <param name="arrayOfWords">The input command string.</param>
         /// <returns>An array of string which is the full team name.</returns>
-        public static string[] ExtractTeamName(string[] arrayOfWords)
+        public string[] ExtractTeamName(string[] arrayOfWords)
         {
             if (arrayOfWords is null)
             {
@@ -31,7 +31,7 @@ namespace BotDontLie.Helpers
         /// </summary>
         /// <param name="teamFullName">The full name of the team in an array.</param>
         /// <returns>The string of the team full name.</returns>
-        public static string GetTeamFullNameStr(string[] teamFullName)
+        public string GetTeamFullNameStr(string[] teamFullName)
         {
             return string.Join(' ', teamFullName);
         }

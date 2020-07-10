@@ -7,6 +7,7 @@ namespace BotDontLie
     using System;
     using System.Net.Http;
     using BotDontLie.Bots;
+    using BotDontLie.Helpers;
     using BotDontLie.Providers;
     using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
@@ -62,6 +63,9 @@ namespace BotDontLie
                 this.Configuration["StorageConnectionString"],
                 provider.GetRequiredService<TelemetryClient>()));
 
+            // Adding the necessary helper classes as well.
+            services.AddSingleton<ITeamHelpers, TeamHelpers>();
+
             // Adding the games provider.
             services.AddSingleton<IGamesProvider, GamesProvider>((provider) => new GamesProvider(
                 this.Configuration["StorageConnectionString"],
@@ -84,9 +88,9 @@ namespace BotDontLie
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, NbaBot>((provider) => new NbaBot(
                 provider.GetRequiredService<TelemetryClient>(),
-                provider.GetRequiredService<MicrosoftAppCredentials>(),
                 provider.GetRequiredService<IBallDontLieService>(),
-                this.Configuration["AppBaseUri"]));
+                this.Configuration["AppBaseUri"],
+                provider.GetRequiredService<ITeamHelpers>()));
 
             // Adding the HttpClient.
             services.AddHttpClient("BallDontLieAPI", c =>
