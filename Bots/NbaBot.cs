@@ -13,7 +13,6 @@ namespace BotDontLie.Bots
     using BotDontLie.Helpers;
     using BotDontLie.Models;
     using BotDontLie.Properties;
-    using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.DataContracts;
     using Microsoft.Bot.Builder;
@@ -27,26 +26,22 @@ namespace BotDontLie.Bots
     {
         private readonly string appBaseUri;
         private readonly TelemetryClient telemetryClient;
-        private readonly IBallDontLieService ballDontLieService;
-        private readonly ITeamHelpers teamHelpers;
+        private readonly IDataHelpers dataHelpers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NbaBot"/> class.
         /// </summary>
         /// <param name="telemetryClient">Application Insights DI.</param>
-        /// <param name="ballDontLieService">Calling NBA APIs DI.</param>
         /// <param name="appBaseUri">The application base URI.</param>
-        /// <param name="teamHelpers">The team helpers class DI.</param>
+        /// <param name="dataHelpers">The data helpers class DI.</param>
         public NbaBot(
             TelemetryClient telemetryClient,
-            IBallDontLieService ballDontLieService,
             string appBaseUri,
-            ITeamHelpers teamHelpers)
+            IDataHelpers dataHelpers)
         {
             this.appBaseUri = appBaseUri;
             this.telemetryClient = telemetryClient;
-            this.ballDontLieService = ballDontLieService;
-            this.teamHelpers = teamHelpers;
+            this.dataHelpers = dataHelpers;
         }
 
         /// <summary>
@@ -203,76 +198,24 @@ namespace BotDontLie.Bots
                     break;
                 case Constants.SyncAllTeams:
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
-                    await this.SyncTeamsAsync(turnContext).ConfigureAwait(false);
+                    await this.dataHelpers.SyncTeamsAsync(turnContext).ConfigureAwait(false);
                     break;
                 case Constants.SyncAllGames:
                     this.telemetryClient.TrackTrace("Syncing all games from 1979 to present");
-                    await this.SyncGamesAsync(turnContext).ConfigureAwait(false);
+                    await this.dataHelpers.SyncGamesAsync(turnContext).ConfigureAwait(false);
                     break;
                 case Constants.SyncAllPlayers:
                     this.telemetryClient.TrackTrace("Syncing all the players");
-                    await this.SyncPlayersAsync(turnContext).ConfigureAwait(false);
+                    await this.dataHelpers.SyncPlayersAsync(turnContext).ConfigureAwait(false);
                     break;
                 case Constants.SyncAllStats:
                     this.telemetryClient.TrackTrace("Syncing all the stats for the players");
-                    await this.SyncStatsAsync(turnContext).ConfigureAwait(false);
+                    await this.dataHelpers.SyncStatsAsync(turnContext).ConfigureAwait(false);
                     break;
                 default:
                     this.telemetryClient.TrackTrace("There may be some other actions taking place");
                     await this.ActOnMoreInformationAsync(text, turnContext, cancellationToken).ConfigureAwait(false);
                     break;
-            }
-        }
-
-        private async Task SyncStatsAsync(ITurnContext<IMessageActivity> turnContext)
-        {
-            var statsResponse = await this.ballDontLieService.SyncAllStatisticsAsync().ConfigureAwait(false);
-            if (statsResponse)
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("I am able to get the stats for you - that's a lot of numbers to crunch on it!!")).ConfigureAwait(false);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any of the statistical data!")).ConfigureAwait(false);
-            }
-        }
-
-        private async Task SyncPlayersAsync(ITurnContext<IMessageActivity> turnContext)
-        {
-            var playersResponse = await this.ballDontLieService.SyncAllPlayersAsync().ConfigureAwait(false);
-            if (playersResponse)
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Got all the players! Want to build a roster, or you want some information?")).ConfigureAwait(false);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any of the players data!")).ConfigureAwait(false);
-            }
-        }
-
-        private async Task SyncGamesAsync(ITurnContext<IMessageActivity> turnContext)
-        {
-            var gamesResponse = await this.ballDontLieService.SyncAllGamesAsync().ConfigureAwait(false);
-            if (gamesResponse)
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("I am able to sync the games in the NBA from 1979 to present - that's a lot of data!")).ConfigureAwait(false);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any data with regards to the games - gotta try again later!")).ConfigureAwait(false);
-            }
-        }
-
-        private async Task SyncTeamsAsync(ITurnContext<IMessageActivity> turnContext)
-        {
-            var teamsResponse = await this.ballDontLieService.SyncAllTeamsAsync().ConfigureAwait(false);
-            if (teamsResponse)
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("All the way from downtown - I am able to sync the teams for you!")).ConfigureAwait(false);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Not able to get any data for the teams. Will have to try again later.")).ConfigureAwait(false);
             }
         }
 
@@ -285,83 +228,12 @@ namespace BotDontLie.Bots
             if (messageText.Contains(Constants.FindPlayerInformation, StringComparison.InvariantCultureIgnoreCase))
             {
                 this.telemetryClient.TrackTrace("Finding the player information");
-                await this.GetPlayerInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
+                await this.dataHelpers.GetPlayerInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
             }
             else if (messageText.Contains(Constants.FindTeamInformation, StringComparison.InvariantCultureIgnoreCase))
             {
                 this.telemetryClient.TrackTrace("Finding the team information");
-                await this.GetTeamInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
-            }
-        }
-
-        private async Task GetTeamInformationAsync(
-            string messageText,
-            ITurnContext<IMessageActivity> turnContext,
-            CancellationToken cancellationToken)
-        {
-            Attachment teamResponseCard;
-            var arrayOfWords = messageText.Split(' ');
-            if (arrayOfWords.Length == 4)
-            {
-                this.telemetryClient.TrackTrace("Finding the information of a team by the short name");
-                var teamShortName = arrayOfWords[3];
-                var teamByShortName = await this.ballDontLieService.GetTeamByNameAsync(teamShortName).ConfigureAwait(false);
-
-                if (teamByShortName != null)
-                {
-                    this.telemetryClient.TrackTrace($"Found the team: {teamByShortName}");
-                    teamResponseCard = TeamResponseCard.GetCard(teamByShortName);
-                    await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    this.telemetryClient.TrackTrace($"Was not able to find data on: {teamShortName}");
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
-                }
-            }
-            else
-            {
-                this.telemetryClient.TrackTrace("Finding the information of a team by the full name");
-                string[] teamFullName = this.teamHelpers.ExtractTeamName(arrayOfWords);
-                var teamFullNameStr = this.teamHelpers.GetTeamFullNameStr(teamFullName);
-                var teamByFullName = await this.ballDontLieService.GetTeamByFullNameAsync(teamFullNameStr).ConfigureAwait(false);
-
-                if (teamByFullName != null)
-                {
-                    this.telemetryClient.TrackTrace($"Found the team: {teamByFullName?.FullName}");
-                    teamResponseCard = TeamResponseCard.GetCard(teamByFullName);
-                    await turnContext.SendActivityAsync(MessageFactory.Attachment(teamResponseCard), cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Oops! I bricked! I couldn't get your team for you!"), cancellationToken).ConfigureAwait(false);
-                }
-            }
-        }
-
-        private async Task GetPlayerInformationAsync(
-            string messageText,
-            ITurnContext<IMessageActivity> turnContext,
-            CancellationToken cancellationToken)
-        {
-            Attachment playerResponseCard;
-            var arrayOfWords = messageText.Split(' ');
-            var playerFirstName = arrayOfWords[3];
-            var playerLastName = arrayOfWords[4];
-
-            var playerId = await this.ballDontLieService.GetPlayerIdByFirstLastNameAsync(playerFirstName, playerLastName).ConfigureAwait(false);
-            var player = await this.ballDontLieService.GetPlayerByIdAsync(playerId).ConfigureAwait(false);
-
-            if (player != null)
-            {
-                this.telemetryClient.TrackTrace($"Found the player: {player.FirstName} {player.LastName}");
-                playerResponseCard = PlayerResponseCard.GetCard(player);
-                await turnContext.SendActivityAsync(MessageFactory.Attachment(playerResponseCard), cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                this.telemetryClient.TrackTrace($"Could not find the player: {player.FirstName} {player.LastName}");
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Rats! Could not find anything on {playerFirstName} {playerLastName}"), cancellationToken).ConfigureAwait(false);
+                await this.dataHelpers.GetTeamInformationAsync(messageText, turnContext, cancellationToken).ConfigureAwait(false);
             }
         }
 

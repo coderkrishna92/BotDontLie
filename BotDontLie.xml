@@ -21,14 +21,13 @@
             This class is for the NBA Bot.
             </summary>
         </member>
-        <member name="M:BotDontLie.Bots.NbaBot.#ctor(Microsoft.ApplicationInsights.TelemetryClient,BotDontLie.Services.IBallDontLieService,System.String,BotDontLie.Helpers.ITeamHelpers)">
+        <member name="M:BotDontLie.Bots.NbaBot.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.String,BotDontLie.Helpers.IDataHelpers)">
             <summary>
             Initializes a new instance of the <see cref="T:BotDontLie.Bots.NbaBot"/> class.
             </summary>
             <param name="telemetryClient">Application Insights DI.</param>
-            <param name="ballDontLieService">Calling NBA APIs DI.</param>
             <param name="appBaseUri">The application base URI.</param>
-            <param name="teamHelpers">The team helpers class DI.</param>
+            <param name="dataHelpers">The data helpers class DI.</param>
         </member>
         <member name="M:BotDontLie.Bots.NbaBot.OnTurnAsync(Microsoft.Bot.Builder.ITurnContext,System.Threading.CancellationToken)">
             <summary>
@@ -155,12 +154,71 @@
             <param name="length">The length of the sub array.</param>
             <returns>A sub array of type T.</returns>
         </member>
-        <member name="T:BotDontLie.Helpers.IDataHelper">
+        <member name="T:BotDontLie.Helpers.DataHelpers">
+            <summary>
+            This class is the data helpers class to get data.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.#ctor(BotDontLie.Services.IBallDontLieService,Microsoft.ApplicationInsights.TelemetryClient,BotDontLie.Helpers.ITeamHelpers)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Helpers.DataHelpers"/> class.
+            </summary>
+            <param name="ballDontLieService">The ball dont lie service API DI.</param>
+            <param name="telemetryClient">Application Insights DI.</param>
+            <param name="teamHelpers">Team Helpers DI.</param>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.GetPlayerInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method gets the player information.
+            </summary>
+            <param name="messageText">The raw text that the user sends the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.GetTeamInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method will get the team information.
+            </summary>
+            <param name="messageText">The raw text the user sends the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.SyncGamesAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync all the games.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.SyncPlayersAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the players.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.SyncStatsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the statistics.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.DataHelpers.SyncTeamsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the NBA teams.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="T:BotDontLie.Helpers.IDataHelpers">
             <summary>
             This interface defines methods to help get the necessary data.
             </summary>
         </member>
-        <member name="M:BotDontLie.Helpers.IDataHelper.GetTeamInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+        <member name="M:BotDontLie.Helpers.IDataHelpers.GetTeamInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
             <summary>
             This method definition will get the team information.
             </summary>
@@ -169,23 +227,39 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A unit of execution.</returns>
         </member>
-        <member name="M:BotDontLie.Helpers.IDataHelper.SyncTeamsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+        <member name="M:BotDontLie.Helpers.IDataHelpers.GetPlayerInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method definition will get the player information.
+            </summary>
+            <param name="messageText">The raw user message to the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.IDataHelpers.SyncTeamsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
             <summary>
             This method will sync the teams.
             </summary>
             <param name="turnContext">The current turn/execution flow.</param>
             <returns>A unit of execution.</returns>
         </member>
-        <member name="M:BotDontLie.Helpers.IDataHelper.SyncStatsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+        <member name="M:BotDontLie.Helpers.IDataHelpers.SyncStatsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
             <summary>
             This method will sync the statistics.
             </summary>
             <param name="turnContext">The current turn/execution flow.</param>
             <returns>A unit of execution.</returns>
         </member>
-        <member name="M:BotDontLie.Helpers.IDataHelper.SyncPlayersAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+        <member name="M:BotDontLie.Helpers.IDataHelpers.SyncPlayersAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
             <summary>
             This method will sync the players.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Helpers.IDataHelpers.SyncGamesAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the games.
             </summary>
             <param name="turnContext">The current turn/execution flow.</param>
             <returns>A unit of execution.</returns>

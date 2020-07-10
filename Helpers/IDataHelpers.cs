@@ -1,4 +1,4 @@
-﻿// <copyright file="IDataHelper.cs" company="Tata Consultancy Services Ltd">
+﻿// <copyright file="IDataHelpers.cs" company="Tata Consultancy Services Ltd">
 // Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,7 @@ namespace BotDontLie.Helpers
     /// <summary>
     /// This interface defines methods to help get the necessary data.
     /// </summary>
-    public interface IDataHelper
+    public interface IDataHelpers
     {
         /// <summary>
         /// This method definition will get the team information.
@@ -21,7 +21,22 @@ namespace BotDontLie.Helpers
         /// <param name="turnContext">The current turn/execution flow.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A unit of execution.</returns>
-        Task GetTeamInformationAsync(string messageText, ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken);
+        Task GetTeamInformationAsync(
+            string messageText,
+            ITurnContext<IMessageActivity> turnContext,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// This method definition will get the player information.
+        /// </summary>
+        /// <param name="messageText">The raw user message to the bot.</param>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A unit of execution.</returns>
+        Task GetPlayerInformationAsync(
+            string messageText,
+            ITurnContext<IMessageActivity> turnContext,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// This method will sync the teams.
@@ -43,5 +58,12 @@ namespace BotDontLie.Helpers
         /// <param name="turnContext">The current turn/execution flow.</param>
         /// <returns>A unit of execution.</returns>
         Task SyncPlayersAsync(ITurnContext<IMessageActivity> turnContext);
+
+        /// <summary>
+        /// This method will sync the games.
+        /// </summary>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <returns>A unit of execution.</returns>
+        Task SyncGamesAsync(ITurnContext<IMessageActivity> turnContext);
     }
 }
