@@ -8,4 +8,11 @@
     <DocumentationFile>C:\Users\Pranav\Documents\GitHub\BotDontLie\Source\BotDontLie.Common\BotDontLie.Common.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Providers\" />
+  </ItemGroup>
+
 </Project>
