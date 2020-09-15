@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Pranav\Documents\GitHub\BotDontLie\Source\BotDontLie.Common\BotDontLie.Common.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
