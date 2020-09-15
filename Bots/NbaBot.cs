@@ -163,7 +163,7 @@ namespace BotDontLie.Bots
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
                     var userWelcomeCardAttachment = WelcomeCard.GetCard(welcomeText);
-                    await turnContext.SendActivityAsync(MessageFactory.Attachment(userWelcomeCardAttachment)).ConfigureAwait(false);
+                    await turnContext.SendActivityAsync(MessageFactory.Attachment(userWelcomeCardAttachment), cancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace BotDontLie.Bots
                 case Constants.TakeATour:
                     this.telemetryClient.TrackTrace("Sending the user tour card");
                     var userTourCards = TourCarousel.GetUserTourCards(this.appBaseUri);
-                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards)).ConfigureAwait(false);
+                    await turnContext.SendActivityAsync(MessageFactory.Carousel(userTourCards), cancellationToken).ConfigureAwait(false);
                     break;
                 case Constants.SyncAllTeams:
                     this.telemetryClient.TrackTrace("Querying to list all of the NBA Teams");
