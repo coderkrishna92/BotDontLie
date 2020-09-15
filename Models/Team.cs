@@ -1,5 +1,5 @@
-﻿// <copyright file="Team.cs" company="Tata Consultancy Services Ltd">
-// Copyright (c) Tata Consultancy Services Ltd. All rights reserved.
+﻿// <copyright file="Team.cs" company="PK Software LLC">
+// Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
 namespace BotDontLie.Models
