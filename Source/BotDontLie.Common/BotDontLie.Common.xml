@@ -4,5 +4,20 @@
         <name>BotDontLie.Common</name>
     </assembly>
     <members>
+        <member name="T:BotDontLie.Common.Helpers.ArrayExtensions">
+            <summary>
+            This class is being used for an extension method on the Array class called SubArray.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.ArrayExtensions.SubArray``1(``0[],System.Int32,System.Int32)">
+            <summary>
+            A method that will generate a sub array given an index, and the length of the selection.
+            </summary>
+            <typeparam name="T">The generic type, which would be the type of the array.</typeparam>
+            <param name="data">The array itself.</param>
+            <param name="index">The starting point of the sub array extraction.</param>
+            <param name="length">The length of the sub array.</param>
+            <returns>An array which is the subarray of a generic type.</returns>
+        </member>
     </members>
 </doc>

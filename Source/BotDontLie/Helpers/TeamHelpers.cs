@@ -5,6 +5,7 @@
 namespace BotDontLie.Helpers
 {
     using System;
+    using BotDontLie.Common.Helpers;
 
     /// <summary>
     /// This class defines the various helper methods with regards to the teams.

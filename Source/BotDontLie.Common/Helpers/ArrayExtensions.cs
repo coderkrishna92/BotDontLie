@@ -2,23 +2,23 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Helpers
+namespace BotDontLie.Common.Helpers
 {
     using System;
 
     /// <summary>
-    /// This class will be used for array extensions.
+    /// This class is being used for an extension method on the Array class called SubArray.
     /// </summary>
     public static class ArrayExtensions
     {
         /// <summary>
-        /// A method that will generate a sub array given an index, and the length of selection.
+        /// A method that will generate a sub array given an index, and the length of the selection.
         /// </summary>
-        /// <typeparam name="T">The type of the array.</typeparam>
+        /// <typeparam name="T">The generic type, which would be the type of the array.</typeparam>
         /// <param name="data">The array itself.</param>
-        /// <param name="index">The starting point of sub array extraction.</param>
+        /// <param name="index">The starting point of the sub array extraction.</param>
         /// <param name="length">The length of the sub array.</param>
-        /// <returns>A sub array of type T.</returns>
+        /// <returns>An array which is the subarray of a generic type.</returns>
         public static T[] SubArray<T>(this T[] data, int index, int length)
         {
             T[] result = new T[length];

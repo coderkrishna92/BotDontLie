@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards" Version="2.1.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.14.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.10.3" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
@@ -59,6 +59,10 @@
 
     <ItemGroup>
       <Folder Include="wwwroot\Content\TeamLogos\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BotDontLie.Common\BotDontLie.Common.csproj" />
     </ItemGroup>
 
 </Project>
