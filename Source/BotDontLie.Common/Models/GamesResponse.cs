@@ -2,13 +2,13 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models the games response.
+    /// This class represents the HTTP response for a games request.
     /// </summary>
     public class GamesResponse
     {

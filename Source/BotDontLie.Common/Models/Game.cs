@@ -2,10 +2,10 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
-    using System;
     using Newtonsoft.Json;
+    using System;
 
     /// <summary>
     /// This class models a single game.

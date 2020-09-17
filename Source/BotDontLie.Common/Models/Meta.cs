@@ -2,12 +2,12 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class defines the meta properties.
+    /// This class represents the metadata associated with various responses.
     /// </summary>
     public class Meta
     {

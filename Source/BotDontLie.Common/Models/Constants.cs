@@ -2,10 +2,10 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
     /// <summary>
-    /// This class defines necessary constants for the bot to function.
+    /// This class defines all the constants.
     /// </summary>
     public static class Constants
     {
