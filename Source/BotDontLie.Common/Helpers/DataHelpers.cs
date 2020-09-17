@@ -2,19 +2,17 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Helpers
+namespace BotDontLie.Common.Helpers
 {
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using BotDontLie.Cards;
-    using BotDontLie.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Schema;
 
     /// <summary>
-    /// This class is the data helpers class to get data.
+    /// This class implements all of the methods defined in <see cref="IDataHelpers"/>.
     /// </summary>
     public class DataHelpers : IDataHelpers
     {
