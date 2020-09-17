@@ -19,5 +19,28 @@
             <param name="length">The length of the sub array.</param>
             <returns>An array which is the subarray of a generic type.</returns>
         </member>
+        <member name="T:BotDontLie.Common.Helpers.IDataHelpers">
+            <summary>
+            This interface defines methods to help get the necessary data.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.GetTeamInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method definition will get the necessary team information.
+            </summary>
+            <param name="messsageText">The raw message that the user sends to the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.GetPlayerInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method definition will get the player information.
+            </summary>
+            <param name="messageText">The raw user message to the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
     </members>
 </doc>
