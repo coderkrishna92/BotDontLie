@@ -42,5 +42,33 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A unit of execution.</returns>
         </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.SyncTeamsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the teams.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.SyncStatsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the statistics.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.SyncPlayersAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the players.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.IDataHelpers.SyncGamesAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the games.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
     </members>
 </doc>
