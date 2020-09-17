@@ -70,5 +70,24 @@
             <param name="turnContext">The current turn/execution flow.</param>
             <returns>A unit of execution.</returns>
         </member>
+        <member name="T:BotDontLie.Common.Helpers.ITeamHelpers">
+            <summary>
+            This interface defines the team helper methods.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.ITeamHelpers.ExtractTeamName(System.String[])">
+            <summary>
+            This method will extract the team name.
+            </summary>
+            <param name="arrayOfWords">The input command.</param>
+            <returns>A string array representing the team name.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.ITeamHelpers.GetTeamFullNameStr(System.String[])">
+            <summary>
+            This concats all words in the array to construct the full team name.
+            </summary>
+            <param name="teamFullName">The array representing the team name.</param>
+            <returns>The full name of the NBA franchise.</returns>
+        </member>
     </members>
 </doc>
