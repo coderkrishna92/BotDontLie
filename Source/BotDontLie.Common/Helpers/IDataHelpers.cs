@@ -37,5 +37,33 @@ namespace BotDontLie.Common.Helpers
             string messageText,
             ITurnContext<IMessageActivity> turnContext,
             CancellationToken cancellationToken);
+
+        /// <summary>
+        /// This method will sync the teams.
+        /// </summary>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <returns>A unit of execution.</returns>
+        Task SyncTeamsAsync(ITurnContext<IMessageActivity> turnContext);
+
+        /// <summary>
+        /// This method will sync the statistics.
+        /// </summary>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <returns>A unit of execution.</returns>
+        Task SyncStatsAsync(ITurnContext<IMessageActivity> turnContext);
+
+        /// <summary>
+        /// This method will sync the players.
+        /// </summary>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <returns>A unit of execution.</returns>
+        Task SyncPlayersAsync(ITurnContext<IMessageActivity> turnContext);
+
+        /// <summary>
+        /// This method will sync the games.
+        /// </summary>
+        /// <param name="turnContext">The current turn/execution flow.</param>
+        /// <returns>A unit of execution.</returns>
+        Task SyncGamesAsync(ITurnContext<IMessageActivity> turnContext);
     }
 }
