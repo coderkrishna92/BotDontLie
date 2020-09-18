@@ -9,10 +9,10 @@ namespace BotDontLie.Bots
     using System.Globalization;
     using System.Threading;
     using System.Threading.Tasks;
-    using BotDontLie.Cards;
-    using BotDontLie.Helpers;
-    using BotDontLie.Models;
-    using BotDontLie.Properties;
+    using BotDontLie.Common.Cards;
+    using BotDontLie.Common.Helpers;
+    using BotDontLie.Common.Models;
+    using BotDontLie.Common.Properties;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.DataContracts;
     using Microsoft.Bot.Builder;

@@ -2,14 +2,14 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Services
+namespace BotDontLie.Common.Services
 {
     using System.Globalization;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using BotDontLie.Models;
-    using BotDontLie.Models.AzureStorage;
-    using BotDontLie.Providers;
+    using BotDontLie.Common.Models;
+    using BotDontLie.Common.Models.AzureStorage;
+    using BotDontLie.Common.Providers;
     using Microsoft.ApplicationInsights;
     using Newtonsoft.Json;
 
@@ -69,7 +69,7 @@ namespace BotDontLie.Services
                 var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
                 foreach (var item in teamsResponse.Teams)
                 {
-                    var teamEntity = this.CreateTeamEntity(item);
+                    var teamEntity = CreateTeamEntity(item);
                     await this.teamsProvider.UpsertNbaTeamAsync(teamEntity).ConfigureAwait(false);
                 }
 
@@ -101,7 +101,7 @@ namespace BotDontLie.Services
                 var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(responseContent);
                 foreach (var item in gamesResponse.Games)
                 {
-                    var gameEntity = this.CreateGameEntity(item);
+                    var gameEntity = CreateGameEntity(item);
                     await this.gamesProvider.UpsertNbaGameAsync(gameEntity).ConfigureAwait(false);
                 }
 
@@ -133,7 +133,7 @@ namespace BotDontLie.Services
                 var playersResponse = JsonConvert.DeserializeObject<PlayersResponse>(responseContent);
                 foreach (var item in playersResponse.Players)
                 {
-                    var playerEntity = this.CreatePlayerEntity(item);
+                    var playerEntity = CreatePlayerEntity(item);
                     await this.playersProvider.UpsertNbaPlayerAsync(playerEntity).ConfigureAwait(false);
                 }
 
@@ -165,7 +165,7 @@ namespace BotDontLie.Services
                 var statsResponse = JsonConvert.DeserializeObject<StatsResponse>(responseContent);
                 foreach (var item in statsResponse.Statistics)
                 {
-                    var statisticsEntity = this.CreateStatisticEntity(item);
+                    var statisticsEntity = CreateStatisticEntity(item);
                     await this.statisticsProvider.UpsertNbaStatisticAsync(statisticsEntity).ConfigureAwait(false);
                 }
 
@@ -257,7 +257,7 @@ namespace BotDontLie.Services
             };
         }
 
-        private TeamEntity CreateTeamEntity(Team team)
+        private static TeamEntity CreateTeamEntity(Team team)
         {
             return new TeamEntity
             {
@@ -273,7 +273,7 @@ namespace BotDontLie.Services
             };
         }
 
-        private GameEntity CreateGameEntity(Game game)
+        private static GameEntity CreateGameEntity(Game game)
         {
             return new GameEntity
             {
@@ -293,7 +293,7 @@ namespace BotDontLie.Services
             };
         }
 
-        private PlayerEntity CreatePlayerEntity(Player player)
+        private static PlayerEntity CreatePlayerEntity(Player player)
         {
             return new PlayerEntity
             {
@@ -310,7 +310,7 @@ namespace BotDontLie.Services
             };
         }
 
-        private StatisticsEntity CreateStatisticEntity(Statistic statistic)
+        private static StatisticsEntity CreateStatisticEntity(Statistic statistic)
         {
             return new StatisticsEntity
             {

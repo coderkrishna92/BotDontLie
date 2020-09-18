@@ -4,6 +4,54 @@
         <name>BotDontLie.Common</name>
     </assembly>
     <members>
+        <member name="T:BotDontLie.Common.Cards.PlayerResponseCard">
+            <summary>
+            This class is the player response card.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Cards.PlayerResponseCard.GetCard(BotDontLie.Common.Models.Player)">
+            <summary>
+            This method will render the response card for a player.
+            </summary>
+            <param name="player">The player information to render in the response card.</param>
+            <returns>An attachment to append to a message.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Cards.TeamResponseCard">
+            <summary>
+            This class represents the response card for the team query.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Cards.TeamResponseCard.GetCard(BotDontLie.Common.Models.Team)">
+            <summary>
+            This method will get the response card for a Team.
+            </summary>
+            <param name="team">The team upon which the card will get rendered.</param>
+            <returns>An attachment to append to a message.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Cards.TourCarousel">
+            <summary>
+            This class is for rendering the tour carousel.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Cards.TourCarousel.GetUserTourCards(System.String)">
+            <summary>
+            Create the set of cards that comprise the user tour carousel.
+            </summary>
+            <param name="appBaseUri">The base URI where the app is hosted.</param>
+            <returns>The user tour in the form of a carousel.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Cards.WelcomeCard">
+            <summary>
+            This class represents the user welcome card.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Cards.WelcomeCard.GetCard(System.String)">
+            <summary>
+            Method that generates the welcome card.
+            </summary>
+            <param name="welcomeText">The content of the welcome text.</param>
+            <returns>An attachment to be appended to a message.</returns>
+        </member>
         <member name="T:BotDontLie.Common.Helpers.ArrayExtensions">
             <summary>
             This class is being used for an extension method on the Array class called SubArray.
@@ -18,6 +66,65 @@
             <param name="index">The starting point of the sub array extraction.</param>
             <param name="length">The length of the sub array.</param>
             <returns>An array which is the subarray of a generic type.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Helpers.DataHelpers">
+            <summary>
+            This class implements all of the methods defined in <see cref="T:BotDontLie.Common.Helpers.IDataHelpers"/>.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.#ctor(BotDontLie.Common.Services.IBallDontLieService,Microsoft.ApplicationInsights.TelemetryClient,BotDontLie.Common.Helpers.ITeamHelpers)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Helpers.DataHelpers"/> class.
+            </summary>
+            <param name="ballDontLieService">The ball dont lie service API DI.</param>
+            <param name="telemetryClient">Application Insights DI.</param>
+            <param name="teamHelpers">Team Helpers DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.GetPlayerInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method gets the player information.
+            </summary>
+            <param name="messageText">The raw text that the user sends the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.GetTeamInformationAsync(System.String,Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity},System.Threading.CancellationToken)">
+            <summary>
+            This method will get the team information.
+            </summary>
+            <param name="messageText">The raw text the user sends the bot.</param>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.SyncGamesAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync all the games.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.SyncPlayersAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the players.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.SyncStatsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the statistics.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.DataHelpers.SyncTeamsAsync(Microsoft.Bot.Builder.ITurnContext{Microsoft.Bot.Schema.IMessageActivity})">
+            <summary>
+            This method will sync the NBA teams.
+            </summary>
+            <param name="turnContext">The current turn/execution flow.</param>
+            <returns>A unit of execution.</returns>
         </member>
         <member name="T:BotDontLie.Common.Helpers.IDataHelpers">
             <summary>
@@ -88,6 +195,1205 @@
             </summary>
             <param name="teamFullName">The array representing the team name.</param>
             <returns>The full name of the NBA franchise.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Helpers.TeamHelpers">
+            <summary>
+            This class defines the various helper methods with regards to the teams.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.TeamHelpers.ExtractTeamName(System.String[])">
+            <summary>
+            This method extracts the team full name.
+            </summary>
+            <param name="arrayOfWords">The input command string.</param>
+            <returns>An array of string which is the full team name.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Helpers.TeamHelpers.GetTeamFullNameStr(System.String[])">
+            <summary>
+            This method constructs the team full name.
+            </summary>
+            <param name="teamFullName">The full name of the team in an array.</param>
+            <returns>The string of the team full name.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Models.AzureStorage.GameEntity">
+            <summary>
+            This model defines the properties that are to be captured as part of the GameInfo table.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.GameId">
+            <summary>
+            Gets or sets the gameId.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Date">
+            <summary>
+            Gets or sets the date of the game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.HomeTeam">
+            <summary>
+            Gets or sets the home team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.HomeTeamScore">
+            <summary>
+            Gets or sets the home team score.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Period">
+            <summary>
+            Gets or sets the period.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Postseason">
+            <summary>
+            Gets or sets a value indicating whether or not the game was in the postseason.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Season">
+            <summary>
+            Gets or sets the season.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Status">
+            <summary>
+            Gets or sets the status of the game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.Time">
+            <summary>
+            Gets or sets the time of the game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.VisitorTeam">
+            <summary>
+            Gets or sets the visitor team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.GameEntity.VisitorTeamScore">
+            <summary>
+            Gets or sets the visitor team score.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity">
+            <summary>
+            This model represents the player entity.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.PlayerId">
+            <summary>
+            Gets or sets the player ID.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.FirstName">
+            <summary>
+            Gets or sets the first_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.HeightFeet">
+            <summary>
+            Gets or sets the height of the player in feet.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.HeightInches">
+            <summary>
+            Gets or sets the height of the player in inches.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.LastName">
+            <summary>
+            Gets or sets the player last_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.Position">
+            <summary>
+            Gets or sets the position of the player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.Team">
+            <summary>
+            Gets or sets the team that the player belongs to.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.PlayerEntity.WeightPounds">
+            <summary>
+            Gets or sets the weight of the player in pounds.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.AzureStorage.StatisticsEntity">
+            <summary>
+            This class represents the statistics entity in Azure table storage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.StatisticsId">
+            <summary>
+            Gets or sets the ID.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Assists">
+            <summary>
+            Gets or sets the assists.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Blocks">
+            <summary>
+            Gets or sets the blocks.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.DefensiveRebounds">
+            <summary>
+            Gets or sets the defensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.ThreePointFieldGoalPct">
+            <summary>
+            Gets or sets the three point field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.ThreePointFieldGoalsAttempted">
+            <summary>
+            Gets or sets the three point field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.ThreePointFieldGoalsMade">
+            <summary>
+            Gets or sets the three point field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FieldGoalPct">
+            <summary>
+            Gets or sets the field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FieldGoalsAttempted">
+            <summary>
+            Gets or sets the field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FieldGoalsMade">
+            <summary>
+            Gets or sets the field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FreeThrowPct">
+            <summary>
+            Gets or sets the free throw percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FreeThrowsAttempted">
+            <summary>
+            Gets or sets the free throws attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.FreeThrowsMade">
+            <summary>
+            Gets or sets the free throws made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Game">
+            <summary>
+            Gets or sets the game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Minutes">
+            <summary>
+            Gets or sets the minutes.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.OffensiveRebounds">
+            <summary>
+            Gets or sets the offensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.PersonalFouls">
+            <summary>
+            Gets or sets the personal fouls.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Player">
+            <summary>
+            Gets or sets the player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Points">
+            <summary>
+            Gets or sets the points.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Rebounds">
+            <summary>
+            Gets or sets the rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Steals">
+            <summary>
+            Gets or sets the steals.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Team">
+            <summary>
+            Gets or sets the team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.StatisticsEntity.Turnover">
+            <summary>
+            Gets or sets the turnovers.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.AzureStorage.TeamEntity">
+            <summary>
+            This class defines the NBA Team to be stored in Azure table storage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.TeamId">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.Abbreviation">
+            <summary>
+            Gets or sets the abbreviation.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.City">
+            <summary>
+            Gets or sets the city.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.Conference">
+            <summary>
+            Gets or sets the conference.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.Division">
+            <summary>
+            Gets or sets the division.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.FullName">
+            <summary>
+            Gets or sets the full_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.AzureStorage.TeamEntity.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Constants">
+            <summary>
+            This class defines all the constants.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.TakeATour">
+            <summary>
+            This command/constant allows for the ability to take a tour.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.SyncAllTeams">
+            <summary>
+            This command/constant allows for querying all teams.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.SyncAllGames">
+            <summary>
+            This command/constant allows to query all games.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.SyncAllPlayers">
+            <summary>
+            This command/constant allows to sync all players.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.SyncAllStats">
+            <summary>
+            This command/constant allows to list all stats.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.TeamInfoTableName">
+            <summary>
+            This constant is representing the TeamInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.PlayerInfoTableName">
+            <summary>
+            This constant is representing the PlayerInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.GamesInfoTableName">
+            <summary>
+            This constant is representing the GamesInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.StatisticsInfoTableName">
+            <summary>
+            This constant is representing the StatisticsInfo table.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.FindPlayerInformation">
+            <summary>
+            This is the first command that we can use in the bot.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Models.Constants.FindTeamInformation">
+            <summary>
+            This constant is representing the command to find the information of a team.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Game">
+            <summary>
+            This class models a single game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Date">
+            <summary>
+            Gets or sets the date.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.HomeTeam">
+            <summary>
+            Gets or sets the home_team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.HomeTeamScore">
+            <summary>
+            Gets or sets the home_team_score.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Period">
+            <summary>
+            Gets or sets the period.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Postseason">
+            <summary>
+            Gets or sets a value indicating whether the game happened in the postseason.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Season">
+            <summary>
+            Gets or sets the season.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.Time">
+            <summary>
+            Gets or sets the time.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.VisitorTeam">
+            <summary>
+            Gets or sets the visitor_team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Game.VisitorTeamScore">
+            <summary>
+            Gets or sets the visitor_team_score.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.GamesResponse">
+            <summary>
+            This class represents the HTTP response for a games request.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.GamesResponse.Games">
+            <summary>
+            Gets or sets the games.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.GamesResponse.Meta">
+            <summary>
+            Gets or sets the metadata.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Meta">
+            <summary>
+            This class represents the metadata associated with various responses.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Meta.TotalPages">
+            <summary>
+            Gets or sets the total_pages.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Meta.CurrentPage">
+            <summary>
+            Gets or sets the current_page.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Meta.NextPage">
+            <summary>
+            Gets or sets the next_page.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Meta.PerPage">
+            <summary>
+            Gets or sets the per_page.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Meta.TotalCount">
+            <summary>
+            Gets or sets the total_count.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Player">
+            <summary>
+            This class represents a single NBA player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.Id">
+            <summary>
+            Gets or sets the player id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.FirstName">
+            <summary>
+            Gets or sets the player first_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.HeightFeet">
+            <summary>
+            Gets or sets the height of the player in feet.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.HeightInches">
+            <summary>
+            Gets or sets the height of the player in inches.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.LastName">
+            <summary>
+            Gets or sets the player last_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.Position">
+            <summary>
+            Gets or sets the position of the player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.Team">
+            <summary>
+            Gets or sets the team that the player belongs to.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Player.WeightPounds">
+            <summary>
+            Gets or sets the weight of the player in pounds.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.PlayersResponse">
+            <summary>
+            This class models the players response.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.PlayersResponse.Players">
+            <summary>
+            Gets or sets the list of players.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.PlayersResponse.Meta">
+            <summary>
+            Gets or sets the response metadata.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Statistic">
+            <summary>
+            This class represents the model of a single statistic.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Assists">
+            <summary>
+            Gets or sets the assists.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Blocks">
+            <summary>
+            Gets or sets the blocks.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.DefensiveRebounds">
+            <summary>
+            Gets or sets the defensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.ThreePointFieldGoalPct">
+            <summary>
+            Gets or sets the 3 pt field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.ThreePointFieldGoalsAttempted">
+            <summary>
+            Gets or sets the number of 3 point field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.ThreePointFieldGoalsMade">
+            <summary>
+            Gets or sets the number of 3 point field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FieldGoalPct">
+            <summary>
+            Gets or sets the field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FieldGoalsAttempted">
+            <summary>
+            Gets or sets the number of field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FieldGoalsMade">
+            <summary>
+            Gets or sets the number of field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FreeThrowPct">
+            <summary>
+            Gets or sets the free throw percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FreeThrowsAttempted">
+            <summary>
+            Gets or sets the free throws attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.FreeThrowsMade">
+            <summary>
+            Gets or sets the free throws made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Game">
+            <summary>
+            Gets or sets the game.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Minutes">
+            <summary>
+            Gets or sets the minutes.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.OffensiveRebounds">
+            <summary>
+            Gets or sets the offensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.PersonalFouls">
+            <summary>
+            Gets or sets the personal fouls.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Player">
+            <summary>
+            Gets or sets the player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Points">
+            <summary>
+            Gets or sets the points.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Rebounds">
+            <summary>
+            Gets or sets the rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Steals">
+            <summary>
+            Gets or sets the steals.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Team">
+            <summary>
+            Gets or sets the team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Statistic.Turnover">
+            <summary>
+            Gets or sets the number of turnovers.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.StatsGame">
+            <summary>
+            This class defines the game object with regards to the statistics response.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Date">
+            <summary>
+            Gets or sets the date.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.HomeTeamId">
+            <summary>
+            Gets or sets the home team id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.HomeTeamScore">
+            <summary>
+            Gets or sets the home team name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Period">
+            <summary>
+            Gets or sets the period (or even the quarter).
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Postseason">
+            <summary>
+            Gets or sets a value indicating whether or not a game is in the postseason.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Season">
+            <summary>
+            Gets or sets the season.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.Time">
+            <summary>
+            Gets or sets the time.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.VisitorTeamId">
+            <summary>
+            Gets or sets the visitor team id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsGame.VisitorTeamScore">
+            <summary>
+            Gets or sets the visitor team score.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.StatsResponse">
+            <summary>
+            This class defines the StatsResponse.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsResponse.Statistics">
+            <summary>
+            Gets or sets the necessary statistics.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.StatsResponse.Meta">
+            <summary>
+            Gets or sets the meta data.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.Team">
+            <summary>
+            This class represents a single NBA team.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.Id">
+            <summary>
+            Gets or sets the id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.Abbreviation">
+            <summary>
+            Gets or sets the abbreviation.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.City">
+            <summary>
+            Gets or sets the city.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.Conference">
+            <summary>
+            Gets or sets the conference.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.Division">
+            <summary>
+            Gets or sets the division.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.FullName">
+            <summary>
+            Gets or sets the full_name.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.Team.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.TeamsAdaptiveSubmitActionData">
+            <summary>
+            This class defines Teams-specific behavior for an adaptive card submit action.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.TeamsAdaptiveSubmitActionData.MsTeams">
+            <summary>
+            Gets or sets the Teams-specific action.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.TeamsResponse">
+            <summary>
+            This class models the Teams API response.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.TeamsResponse.Teams">
+            <summary>
+            Gets or sets the list of teams.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.TeamsResponse.Meta">
+            <summary>
+            Gets or sets the meta data.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Properties.BotResource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindGamesText">
+            <summary>
+              Looks up a localized string similar to You can search for a game in NBA any season from 1979 onwards....
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindGamesTitleText">
+            <summary>
+              Looks up a localized string similar to Find Games.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindPlayersText">
+            <summary>
+              Looks up a localized string similar to You can search for an NBA player by their last name....
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindPlayersTitleText">
+            <summary>
+              Looks up a localized string similar to Find Players.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindTeamsText">
+            <summary>
+              Looks up a localized string similar to You can search for an NBA franchise.....
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.FindTeamsTitleText">
+            <summary>
+              Looks up a localized string similar to Find Teams.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.PlayerFullNameFormat">
+            <summary>
+              Looks up a localized string similar to {0} {1}.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.TakeATourCTATitle">
+            <summary>
+              Looks up a localized string similar to Take a tour.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.TeamResponseTitleText">
+            <summary>
+              Looks up a localized string similar to NBA Franchise.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Properties.BotResource.WelcomeText">
+            <summary>
+              Looks up a localized string similar to Hello.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.GamesProvider">
+            <summary>
+            This class implements the necessary methods that are defined in <see cref="T:BotDontLie.Common.Providers.IGamesProvider"/>.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Providers.GamesProvider.PartitionKey">
+            <summary>
+            This is the partition key for the Games table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.GamesProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Providers.GamesProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure Table connection string.</param>
+            <param name="telemetryClient">ApplicationInsights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.GamesProvider.UpsertNbaGameAsync(BotDontLie.Common.Models.AzureStorage.GameEntity)">
+            <summary>
+            Method to save the game in the Games table in Azure table storage.
+            </summary>
+            <param name="game">The game to save.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> which resolves successfully upon the successful saving of data in Azure table storage.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.GamesProvider.GetGameEntityByGameIdAsync(System.Int64)">
+            <summary>
+            Method to get the game by the game ID.
+            </summary>
+            <param name="gameId">The game ID to retrieve.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> which contains the type of <see cref="T:BotDontLie.Common.Models.AzureStorage.GameEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.IGamesProvider">
+            <summary>
+            This interface defines methods to perform CRUD operations on the Games table in Azure table storage.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IGamesProvider.UpsertNbaGameAsync(BotDontLie.Common.Models.AzureStorage.GameEntity)">
+            <summary>
+            Saves or updates a game entity.
+            </summary>
+            <param name="game">The game to save or update.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that resolves successfully if the data was correctly saved.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IGamesProvider.GetGameEntityByGameIdAsync(System.Int64)">
+            <summary>
+            Retrieves a Game entity for the Azure table storage using the gameId.
+            </summary>
+            <param name="gameId">The ID of the game entity to fetch.</param>
+            <returns>A unit of execution, or a <see cref="T:System.Threading.Tasks.Task"/> which contains the typ of <see cref="T:BotDontLie.Common.Models.AzureStorage.GameEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.IPlayersProvider">
+            <summary>
+            This interface defines all the CRUD operations to be done on the Players table in Azure table storage.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IPlayersProvider.UpsertNbaPlayerAsync(BotDontLie.Common.Models.AzureStorage.PlayerEntity)">
+            <summary>
+            Save or update the player entity.
+            </summary>
+            <param name="player">The player to save.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> that resolves successfully if the data was saved properly.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IPlayersProvider.GetPlayerEntityByFullNameAsync(System.String,System.String)">
+            <summary>
+            Gets the player by their name.
+            </summary>
+            <param name="firstName">The first name of the player.</param>
+            <param name="lastName">The last name of the player.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IPlayersProvider.GetPlayerEntityByPlayerIdAsync(System.Int64)">
+            <summary>
+            Gets the player by their ID.
+            </summary>
+            <param name="playerId">The player ID.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.IStatisticsProvider">
+            <summary>
+            This interface will define methods to insert table into Azure table storage.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IStatisticsProvider.UpsertNbaStatisticAsync(BotDontLie.Common.Models.AzureStorage.StatisticsEntity)">
+            <summary>
+            Save or update the NBA statistic.
+            </summary>
+            <param name="statisticsEntity">The statistic entity to save.</param>
+            <returns>A task that would resolve successfully to indicate whether or not data was saved.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.IStatisticsProvider.GetStatisticsEntityByIdAsync(System.Int64)">
+            <summary>
+            Method definition to get the necessary statistics entity by their ID.
+            </summary>
+            <param name="statisticsId">The ID of the statistics entities.</param>
+            <returns>A unit of execution that contains <see cref="T:BotDontLie.Common.Models.AzureStorage.StatisticsEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.ITeamsProvider">
+            <summary>
+            This interface defines the methods to perform CRUD operations on the Teams table in Azure table storage.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.ITeamsProvider.UpsertNbaTeamAsync(BotDontLie.Common.Models.AzureStorage.TeamEntity)">
+            <summary>
+            Save or update the team entity.
+            </summary>
+            <param name="teamEntity">The team that is being retrieved from the original Ball Dont Lie API.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> that resolves successfully if the data was saved properly.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.ITeamsProvider.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method definition to get the team by the full name.
+            </summary>
+            <param name="teamFullName">The full name of the NBA team (i.e. New York Knicks).</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.ITeamsProvider.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method definition to get the team by name.
+            </summary>
+            <param name="teamName">The name of the NBA team.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.PlayersProvider">
+            <summary>
+            This class implements the methods defined in <see cref="T:BotDontLie.Common.Providers.IPlayersProvider"/> interface.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Providers.PlayersProvider.PartitionKey">
+            <summary>
+            This is the partition key for the Players table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.PlayersProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Providers.PlayersProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure Table connection string.</param>
+            <param name="telemetryClient">ApplicationInsights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.PlayersProvider.UpsertNbaPlayerAsync(BotDontLie.Common.Models.AzureStorage.PlayerEntity)">
+            <summary>
+            Method to save the player in the Players table in Azure table storage.
+            </summary>
+            <param name="player">The player to save.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> which resolves successfully upon the successful saving of data in Azure table storage.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.PlayersProvider.GetPlayerEntityByFullNameAsync(System.String,System.String)">
+            <summary>
+            Having the method to retrieve a player by their first and last name.
+            </summary>
+            <param name="firstName">The first name of the player to search.</param>
+            <param name="lastName">The last name of the player to search.</param>
+            <returns>A unit of execution that returns a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.PlayersProvider.GetPlayerEntityByPlayerIdAsync(System.Int64)">
+            <summary>
+            Method to retrieve the player by their ID.
+            </summary>
+            <param name="playerId">The player ID.</param>
+            <returns>A unit of execution that returns a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.StatisticsProvider">
+            <summary>
+            This class implements all of the methods defined in <see cref="T:BotDontLie.Common.Providers.IStatisticsProvider"/>.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Providers.StatisticsProvider.PartitionKey">
+            <summary>
+            This is the partition key for the statistics table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.StatisticsProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Providers.StatisticsProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure table storage connection string.</param>
+            <param name="telemetryClient">Application Insights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.StatisticsProvider.UpsertNbaStatisticAsync(BotDontLie.Common.Models.AzureStorage.StatisticsEntity)">
+            <summary>
+            Saves or updates the NBA statistics into Azure Table storage.
+            </summary>
+            <param name="statistic">The statistic to save or update.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that would resolve successfully if the data has been properly saved.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.StatisticsProvider.GetStatisticsEntityByIdAsync(System.Int64)">
+            <summary>
+            This method will be able to retrieve from the statistics table by the ID.
+            </summary>
+            <param name="statisticsId">The statistics ID.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.StatisticsEntity"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Providers.TeamsProvider">
+            <summary>
+            This class implements methods defined in <see cref="T:BotDontLie.Common.Providers.ITeamsProvider"/>.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Common.Providers.TeamsProvider.PartitionKey">
+            <summary>
+            This is the partition key for the Team table.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.TeamsProvider.#ctor(System.String,Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Providers.TeamsProvider"/> class.
+            </summary>
+            <param name="connectionString">The Azure Table connection string.</param>
+            <param name="telemetryClient">ApplicationInsights DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.TeamsProvider.UpsertNbaTeamAsync(BotDontLie.Common.Models.AzureStorage.TeamEntity)">
+            <summary>
+            Saves a team entity.
+            </summary>
+            <param name="teamEntity">The team to save.</param>
+            <returns>A unit of execution.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.TeamsProvider.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method to retrieve a <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/> using the full name.
+            </summary>
+            <param name="teamFullName">The full name for an NBA team.</param>
+            <returns>A unit of execution that returns a <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/> boxed in.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.TeamsProvider.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method to retrieve a <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/> using the team name.
+            </summary>
+            <param name="teamName">The name of the NBA team.</param>
+            <returns>A unit of execution that returns a <see cref="T:BotDontLie.Common.Models.AzureStorage.TeamEntity"/> boxed in.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Providers.TeamsProvider.StoreOrUpdateTeamEntityAsync(BotDontLie.Common.Models.AzureStorage.TeamEntity)">
+            <summary>
+            Store or update ticket entity in table storage.
+            </summary>
+            <param name="entity">Represents ticket entity used for storage and retrieval.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> that represents configuration entity is saved or updated.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Services.BallDontLieService">
+            <summary>
+            This class will implement the methods that are defined in the interface <see cref="T:BotDontLie.Common.Services.IBallDontLieService"/>.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.#ctor(Microsoft.ApplicationInsights.TelemetryClient,System.Net.Http.IHttpClientFactory,BotDontLie.Common.Providers.ITeamsProvider,BotDontLie.Common.Providers.IPlayersProvider,BotDontLie.Common.Providers.IGamesProvider,BotDontLie.Common.Providers.IStatisticsProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BotDontLie.Common.Services.BallDontLieService"/> class.
+            </summary>
+            <param name="telemetryClient">Application Insights DI.</param>
+            <param name="httpClientFactory">The HTTP Client Factory DI.</param>
+            <param name="teamsProvider">The NBA Teams Provider DI.</param>
+            <param name="playersProvider">The NBA Players Provider DI.</param>
+            <param name="gamesProvider">The NBA Games Provider DI.</param>
+            <param name="statisticsProvider">The NBA Statistics Provider DI.</param>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.SyncAllTeamsAsync">
+            <summary>
+            Method implementation to return all 30 NBA franchises.
+            </summary>
+            <returns>A unit of execution that contains the type of <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.SyncAllGamesAsync">
+            <summary>
+            Method implementation to get all the games available.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.SyncAllPlayersAsync">
+            <summary>
+            Method implementation to get all the players available.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.SyncAllStatisticsAsync">
+            <summary>
+            Method implementation to get all the stats available.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.StatsResponse"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.GetPlayerIdByFirstLastNameAsync(System.String,System.String)">
+            <summary>
+            Implementation to get the playerID by querying the first and last name of the player.
+            </summary>
+            <param name="firstName">The first name of the player.</param>
+            <param name="lastName">The last name of the player.</param>
+            <returns>A unit of execution that contains a type <see cref="T:System.Int64"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method implementation to get a team by their name (i.e. Knicks).
+            </summary>
+            <param name="teamName">The team name.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.Team"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.GetPlayerByIdAsync(System.Int64)">
+            <summary>
+            Method implementation in order to get a specific player.
+            </summary>
+            <param name="playerId">The ID of the player information to retrieve.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.Player"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.BallDontLieService.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method implementation to get a team by their full name (i.e. Oklahoma City Thunder).
+            </summary>
+            <param name="teamFullName">The full/formal name of the NBA franchise.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.Team"/>.</returns>
+        </member>
+        <member name="T:BotDontLie.Common.Services.IBallDontLieService">
+            <summary>
+            Interface that contains the necessary method definitions to query the BallDontLie API.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.SyncAllTeamsAsync">
+            <summary>
+            Method definition that will retrieve all 30 NBA franchises.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all franchises have been synced or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.SyncAllPlayersAsync">
+            <summary>
+            Method definition that will get all the players.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all players have been synced or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.SyncAllStatisticsAsync">
+            <summary>
+            Method definition that will get all the statistics.
+            </summary>
+            <returns>A unit of execution that contains a type of <see cref="T:System.Boolean"/> which determines if all statistics have been synced or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.SyncAllGamesAsync">
+            <summary>
+            Method definition that will retrieve all games.
+            </summary>
+            <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Common.Models.GamesResponse"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.GetTeamByNameAsync(System.String)">
+            <summary>
+            Method definition that will retrieve a specific NBA franchise by their name.
+            </summary>
+            <param name="teamName">The name of the team (not the full name).</param>
+            <returns>A unit of execution that contains the type of <see cref="T:BotDontLie.Common.Models.Team"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.GetTeamByFullNameAsync(System.String)">
+            <summary>
+            Method definition that will retrieve a specific NBA franchise by their full name.
+            </summary>
+            <param name="teamFullName">The full name of the team (i.e. Oklahoma City Thunder).</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.Team"/>.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.GetPlayerIdByFirstLastNameAsync(System.String,System.String)">
+            <summary>
+            Method definition to get the playerId by the first and last name of the player (i.e. Carmelo Anthony).
+            </summary>
+            <param name="firstName">The first name of the player.</param>
+            <param name="lastName">The last name of the player.</param>
+            <returns>A task that contains data of type <see cref="T:System.Int64"/> which represents the playerID.</returns>
+        </member>
+        <member name="M:BotDontLie.Common.Services.IBallDontLieService.GetPlayerByIdAsync(System.Int64)">
+            <summary>
+            Method definition to get the player entity by the playerID.
+            </summary>
+            <param name="playerId">The player ID.</param>
+            <returns>A unit of execution that contains a type of <see cref="T:BotDontLie.Common.Models.AzureStorage.PlayerEntity"/>.</returns>
         </member>
     </members>
 </doc>

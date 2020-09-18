@@ -2,17 +2,16 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Providers
+namespace BotDontLie.Common.Providers
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Threading.Tasks;
-    using BotDontLie.Models;
-    using BotDontLie.Models.AzureStorage;
+    using BotDontLie.Common.Models;
+    using BotDontLie.Common.Models.AzureStorage;
     using Microsoft.ApplicationInsights;
-    using Microsoft.WindowsAzure.Storage;
-    using Microsoft.WindowsAzure.Storage.Table;
+    using Microsoft.Azure.Cosmos.Table;
 
     /// <summary>
     /// This class implements the methods defined in <see cref="IPlayersProvider"/> interface.

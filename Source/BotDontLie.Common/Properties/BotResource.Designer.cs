@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BotDontLie.Properties {
+namespace BotDontLie.Common.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BotDontLie.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BotDontLie.Properties.BotResource", typeof(BotResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BotDontLie.Common.Properties.BotResource", typeof(BotResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

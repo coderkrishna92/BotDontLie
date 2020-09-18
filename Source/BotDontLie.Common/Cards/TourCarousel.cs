@@ -2,10 +2,11 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Cards
+namespace BotDontLie.Common.Cards
 {
+    using System;
     using System.Collections.Generic;
-    using BotDontLie.Properties;
+    using BotDontLie.Common.Properties;
     using Microsoft.Bot.Schema;
 
     /// <summary>
@@ -20,6 +21,11 @@ namespace BotDontLie.Cards
         /// <returns>The user tour in the form of a carousel.</returns>
         public static IEnumerable<Attachment> GetUserTourCards(string appBaseUri)
         {
+            if (appBaseUri is null)
+            {
+                throw new ArgumentNullException(nameof(appBaseUri));
+            }
+
             return new List<Attachment>()
             {
                 GetCard(BotResource.FindPlayersTitleText, BotResource.FindPlayersText, appBaseUri + "/content/FindPlayers.png"),

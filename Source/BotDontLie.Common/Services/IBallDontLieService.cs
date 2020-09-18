@@ -2,11 +2,11 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Services
+namespace BotDontLie.Common.Services
 {
     using System.Threading.Tasks;
-    using BotDontLie.Models;
-    using BotDontLie.Models.AzureStorage;
+    using BotDontLie.Common.Models;
+    using BotDontLie.Common.Models.AzureStorage;
 
     /// <summary>
     /// Interface that contains the necessary method definitions to query the BallDontLie API.

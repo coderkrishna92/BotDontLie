@@ -8,8 +8,8 @@ namespace BotDontLie
     using System.Net.Http;
     using BotDontLie.Bots;
     using BotDontLie.Common.Helpers;
-    using BotDontLie.Providers;
-    using BotDontLie.Services;
+    using BotDontLie.Common.Providers;
+    using BotDontLie.Common.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;

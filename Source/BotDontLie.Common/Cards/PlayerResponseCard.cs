@@ -2,14 +2,14 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Cards
+namespace BotDontLie.Common.Cards
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using AdaptiveCards;
-    using BotDontLie.Models;
-    using BotDontLie.Properties;
+    using BotDontLie.Common.Models;
+    using BotDontLie.Common.Properties;
     using Microsoft.Bot.Schema;
 
     /// <summary>

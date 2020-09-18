@@ -7,6 +7,8 @@ namespace BotDontLie.Common.Helpers
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using BotDontLie.Common.Cards;
+    using BotDontLie.Common.Services;
     using Microsoft.ApplicationInsights;
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Schema;
