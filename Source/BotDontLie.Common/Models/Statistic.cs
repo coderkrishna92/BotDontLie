@@ -2,7 +2,7 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
     using Newtonsoft.Json;
 

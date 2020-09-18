@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Cards\" />
-    <Folder Include="Models\AzureStorage\" />
     <Folder Include="Services\" />
     <Folder Include="Providers\" />
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace BotDontLie
     using System;
     using System.Net.Http;
     using BotDontLie.Bots;
-    using BotDontLie.Helpers;
+    using BotDontLie.Common.Helpers;
     using BotDontLie.Providers;
     using BotDontLie.Services;
     using Microsoft.ApplicationInsights;

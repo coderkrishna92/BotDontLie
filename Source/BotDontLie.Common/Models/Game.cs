@@ -4,8 +4,8 @@
 
 namespace BotDontLie.Common.Models
 {
-    using Newtonsoft.Json;
     using System;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// This class models a single game.

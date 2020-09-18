@@ -1,23 +1,23 @@
-﻿// <copyright file="TeamsResponse.cs" company="PK Software LLC">
+﻿// <copyright file="StatsResponse.cs" company="PK Software LLC">
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models
+namespace BotDontLie.Common.Models
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// This class models the Teams API response.
+    /// This class defines the StatsResponse.
     /// </summary>
-    public class TeamsResponse
+    public class StatsResponse
     {
         /// <summary>
-        /// Gets or sets the list of teams.
+        /// Gets or sets the necessary statistics.
         /// </summary>
         [JsonProperty("data")]
 #pragma warning disable CA2227 // Collection properties should be read only
-        public List<Team> Teams { get; set; }
+        public List<Statistic> Statistics { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary>
