@@ -20,11 +20,11 @@
   <ItemGroup>
     <Folder Include="Cards\" />
     <Folder Include="Services\" />
-    <Folder Include="Providers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
     <PackageReference Include="Microsoft.Bot.Builder" Version="4.10.3" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>

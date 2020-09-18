@@ -2,13 +2,13 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Providers
+namespace BotDontLie.Common.Providers
 {
     using System.Threading.Tasks;
-    using BotDontLie.Models.AzureStorage;
+    using BotDontLie.Common.Models.AzureStorage;
 
     /// <summary>
-    /// This interface defines the methods to perform CRUD operations on the Players table in Azure table storage.
+    /// This interface defines all the CRUD operations to be done on the Players table in Azure table storage.
     /// </summary>
     public interface IPlayersProvider
     {

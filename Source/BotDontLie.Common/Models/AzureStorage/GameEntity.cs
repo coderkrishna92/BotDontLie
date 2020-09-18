@@ -2,11 +2,11 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Models.AzureStorage
+namespace BotDontLie.Common.Models.AzureStorage
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.WindowsAzure.Storage.Table;
+    using Microsoft.Azure.Cosmos.Table;
     using Newtonsoft.Json;
 
     /// <summary>

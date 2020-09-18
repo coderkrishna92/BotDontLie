@@ -2,10 +2,10 @@
 // Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
-namespace BotDontLie.Providers
+namespace BotDontLie.Common.Providers
 {
     using System.Threading.Tasks;
-    using BotDontLie.Models;
+    using BotDontLie.Common.Models.AzureStorage;
 
     /// <summary>
     /// This interface defines the methods to perform CRUD operations on the Teams table in Azure table storage.
