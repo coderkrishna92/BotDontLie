@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BotDontLie.Tests</name>
+    </assembly>
+    <members>
+        <member name="T:BotDontLie.Tests.UnitTest1">
+            <summary>
+            This is the necessary test class.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Tests.UnitTest1.Setup">
+            <summary>
+            This is the setup method.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Tests.UnitTest1.Test1">
+            <summary>
+            This is the test method.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Tests.UnitTest1.MyTestMethod">
+            <summary>
+            This is a simple test method to have the unit testing work.
+            </summary>
+        </member>
+    </members>
+</doc>
