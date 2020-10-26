@@ -705,6 +705,131 @@
             Gets or sets the response metadata.
             </summary>
         </member>
+        <member name="T:BotDontLie.Common.Models.SeasonAverage">
+            <summary>
+            This class represents the season average of a player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.GamesPlayed">
+            <summary>
+            Gets or sets the games played.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.PlayerId">
+            <summary>
+            Gets or sets the player id.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Season">
+            <summary>
+            Gets or sets the season.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Minutes">
+            <summary>
+            Gets or sets the minutes that the player played.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FieldGoalsMade">
+            <summary>
+            Gets or sets the field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FieldGoalsAttempted">
+            <summary>
+            Gets or sets the number of field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.ThreePointFieldGoalsMade">
+            <summary>
+            Gets or sets the number of 3 point field goals made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.ThreePointFieldGoalsAttempted">
+            <summary>
+            Gets or sets the number of 3 point field goals attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FreeThrowsMade">
+            <summary>
+            Gets or sets the number of free throws made.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FreeThrowsAttempted">
+            <summary>
+            Gets or sets the number of free throws attempted.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.OffensiveRebounds">
+            <summary>
+            Gets or sets the number of offensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.DefensiveRebounds">
+            <summary>
+            Gets or sets the number of defensive rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Rebounds">
+            <summary>
+            Gets or sets the number of rebounds.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Assists">
+            <summary>
+            Gets or sets the number of assists.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Steals">
+            <summary>
+            Gets or sets the number of steals.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Blocks">
+            <summary>
+            Gets or sets the number of blocks.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Turnovers">
+            <summary>
+            Gets or sets the number of turnovers.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.PersonalFouls">
+            <summary>
+            Gets or sets the number of personal fouls.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.Points">
+            <summary>
+            Gets or sets the number of points.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FieldGoalPct">
+            <summary>
+            Gets or sets the field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.ThreePointFieldGoalPct">
+            <summary>
+            Gets or sets the 3 pt field goal percentage.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverage.FreeThrowPct">
+            <summary>
+            Gets or sets the free throw percentage.
+            </summary>
+        </member>
+        <member name="T:BotDontLie.Common.Models.SeasonAverageResponse">
+            <summary>
+            This class represents the season average response for a player.
+            </summary>
+        </member>
+        <member name="P:BotDontLie.Common.Models.SeasonAverageResponse.SeasonAverage">
+            <summary>
+            Gets or sets the season average.
+            </summary>
+        </member>
         <member name="T:BotDontLie.Common.Models.Statistic">
             <summary>
             This class represents the model of a single statistic.
