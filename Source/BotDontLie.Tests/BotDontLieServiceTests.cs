@@ -70,5 +70,41 @@ namespace BotDontLie.Tests
                 throw;
             }
         }
+
+        /// <summary>
+        /// This method will test getting the necessary team by their name.
+        /// </summary>
+        /// <returns>If the method was able to run or not.</returns>
+        [Test]
+        public async Task GetTeamByTeamNameTest()
+        {
+            try
+            {
+                // TODO: Making sure that all of the logic gets implemented.
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error happened: {ex.StackTrace}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method will get the team by the ID.
+        /// </summary>
+        /// <returns>A task that would signify if the method has run properly.</returns>
+        [Test]
+        public async Task GetTeamByIdTest()
+        {
+            try
+            {
+                // TODO: Make sure to have this unit test written.
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error happened: {ex.StackTrace}");
+                throw;
+            }
+        }
     }
 }
