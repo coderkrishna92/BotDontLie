@@ -4,6 +4,27 @@
         <name>BotDontLie.Tests</name>
     </assembly>
     <members>
+        <member name="T:BotDontLie.Tests.BotDontLieServiceTests">
+            <summary>
+            This is the test for all of the Bot Dont Lie service methods.
+            </summary>
+        </member>
+        <member name="F:BotDontLie.Tests.BotDontLieServiceTests.ApiClient">
+            <summary>
+            This is the API client.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Tests.BotDontLieServiceTests.Setup">
+            <summary>
+            This is the one time setup method.
+            </summary>
+        </member>
+        <member name="M:BotDontLie.Tests.BotDontLieServiceTests.GetAllTeamsTest">
+            <summary>
+            This is the test to get all of the teams.
+            </summary>
+            <returns>If the method was able to run or not.</returns>
+        </member>
         <member name="T:BotDontLie.Tests.UnitTest1">
             <summary>
             This is the necessary test class.

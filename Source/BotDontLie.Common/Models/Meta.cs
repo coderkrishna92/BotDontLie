@@ -27,7 +27,7 @@ namespace BotDontLie.Common.Models
         /// Gets or sets the next_page.
         /// </summary>
         [JsonProperty("next_page")]
-        public int NextPage { get; set; }
+        public int? NextPage { get; set; }
 
         /// <summary>
         /// Gets or sets the per_page.

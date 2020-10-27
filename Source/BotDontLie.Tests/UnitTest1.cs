@@ -1,5 +1,5 @@
-// <copyright file="UnitTest1.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="UnitTest1.cs" company="PK Software LLC">
+// Copyright (c) PK Software LLC. All rights reserved.
 // </copyright>
 
 namespace BotDontLie.Tests
