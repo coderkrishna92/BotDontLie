@@ -25,6 +25,18 @@
             </summary>
             <returns>If the method was able to run or not.</returns>
         </member>
+        <member name="M:BotDontLie.Tests.BotDontLieServiceTests.GetTeamByTeamNameTest">
+            <summary>
+            This method will test getting the necessary team by their name.
+            </summary>
+            <returns>If the method was able to run or not.</returns>
+        </member>
+        <member name="M:BotDontLie.Tests.BotDontLieServiceTests.GetTeamByIdTest">
+            <summary>
+            This method will get the team by the ID.
+            </summary>
+            <returns>A task that would signify if the method has run properly.</returns>
+        </member>
         <member name="T:BotDontLie.Tests.UnitTest1">
             <summary>
             This is the necessary test class.

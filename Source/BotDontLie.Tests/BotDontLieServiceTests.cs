@@ -5,6 +5,7 @@
 namespace BotDontLie.Tests
 {
     using System;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using BotDontLie.Common.Models;
@@ -80,7 +81,16 @@ namespace BotDontLie.Tests
         {
             try
             {
-                // TODO: Making sure that all of the logic gets implemented.
+                var teamNameToTest = "New York Knicks";
+#pragma warning disable CA2000 // Dispose objects before losing scope
+                var request = new HttpRequestMessage(HttpMethod.Get, "v1/teams");
+#pragma warning restore CA2000 // Dispose objects before losing scope
+                HttpResponseMessage response = await ApiClient.SendAsync(request).ConfigureAwait(false);
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
+                var teamToReturn = teamsResponse.Teams.FirstOrDefault(x => x.FullName == teamNameToTest);
+
+                Assert.IsNotNull(teamToReturn);
             }
             catch (Exception ex)
             {
@@ -98,7 +108,15 @@ namespace BotDontLie.Tests
         {
             try
             {
-                // TODO: Make sure to have this unit test written.
+                var teamIdToTest = 1;
+#pragma warning disable CA2000 // Dispose objects before losing scope
+                var request = new HttpRequestMessage(HttpMethod.Get, $"v1/teams/{teamIdToTest}");
+#pragma warning restore CA2000 // Dispose objects before losing scope
+                HttpResponseMessage response = await ApiClient.SendAsync(request).ConfigureAwait(false);
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var team = JsonConvert.DeserializeObject<Team>(responseContent);
+
+                Assert.IsNotNull(team);
             }
             catch (Exception ex)
             {
