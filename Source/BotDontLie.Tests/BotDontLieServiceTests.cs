@@ -59,7 +59,7 @@ namespace BotDontLie.Tests
                 var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
                 foreach (var item in teamsResponse.Teams)
                 {
-                    Console.WriteLine($"{item.Abbreviation}");
+                    Console.WriteLine($"Abbreviation: {item.Abbreviation}");
                 }
 
                 Assert.IsTrue(response.IsSuccessStatusCode);
@@ -90,6 +90,8 @@ namespace BotDontLie.Tests
                 var teamsResponse = JsonConvert.DeserializeObject<TeamsResponse>(responseContent);
                 var teamToReturn = teamsResponse.Teams.FirstOrDefault(x => x.FullName == teamNameToTest);
 
+                Console.WriteLine($"TeamId: {teamToReturn}");
+
                 Assert.IsNotNull(teamToReturn);
             }
             catch (Exception ex)
@@ -116,6 +118,7 @@ namespace BotDontLie.Tests
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var team = JsonConvert.DeserializeObject<Team>(responseContent);
 
+                Console.WriteLine($"TeamId: {team.Id}");
                 Assert.IsNotNull(team);
             }
             catch (Exception ex)
